@@ -1,0 +1,8 @@
+name: 'custom_dev'
+type: module
+description: 'Custom assessment module'
+package: Custom
+version: '8.x-9.4'
+core: '8.x'
+project: 'custom_dev'
+datestamp: 1531841930

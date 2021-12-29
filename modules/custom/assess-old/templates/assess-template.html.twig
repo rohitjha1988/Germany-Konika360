@@ -1,0 +1,51 @@
+ {# {{dump(var1)}} #}
+-------------------------------------
+-----------------------------------
+test
+{% for key, value in var1 %}
+  question : {{ key }}:--- </br>
+
+  
+  {% if value is iterable %}
+  {% for key, name in value %}
+Answer :{{ name }}99 </br>
+  {% endfor %} 
+{% else %}
+Answer :{{ value }}$$ </br>
+{% endif %}
+{% endfor %} 
+
+
+{#
+{% if users is iterable %}
+{% else %}
+{% endif %}
+
+
+
+{% for key, record in var1 %}
+
+    {% for key1, record1 in record %}
+
+         {{ key1 }}
+
+     {% endfor %}
+
+{% endfor %}
+
+{% for key, record in var1 %}
+
+     {% for key1, record1 in record %}
+
+           {% if record1 is defined %}   
+
+{{key}}#######
+
+            {{ record1 }}
+
+
+           {% endif %}
+
+     {% endfor %}
+
+{% endfor %} #}

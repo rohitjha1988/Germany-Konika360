@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Bartik theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_preprocess_HOOK() for HTML document templates.
+ *
+ * Adds body classes if certain regions have content.
+ 
+function assessment_preprocess_node(&$variables)
+{
+ $result = array();
+ $result =  explode("=",$_SERVER['QUERY_STRING']);
+ 
+ $variables['url_string'] = $result[1];
+
+
+
+}
+*/
+function assessment_preprocess_node(&$variables){
+$result = array();
+  $result =  explode("=", $_SERVER['QUERY_STRING']);
+
+  $variables['url_string'] = $result[1];
+
+
+  unset($result1);
+  $result1 = [];
+  $result1 =  explode("&", $_SERVER['QUERY_STRING']);
+
+
+  //  print "<pre>"; 
+  //  print_r($alldata);
+  //  print "<pre>";
+  //  die('kkkk');
+
+  $result2 =  explode("=", $result1[0]);
+  $result3 =  explode("=", $result1[1]);
+  $result4 =  explode("=", $result1[2]);
+  $variables['id_param'] = $result4['1'];  
+
+$variables['#cache']['max-age'] = 0;
+\Drupal::service('page_cache_kill_switch')->trigger();
+// drupal_flush_all_caches();
+$curr_session = $_SESSION['assess']['sessionid'];
+// $results_score = \Drupal::database()->select('digital_maturity_score', 'n')
+//       ->fields('n', array('pid','score'))
+//       ->condition('sessionid', $curr_session)
+//       ->execute()->fetchAllAssoc('pid');
+// print_r($results_score);die;
+
+    $connection = Database::getConnection();
+    $sth = $connection->select('digital_maturity_score', 'fm');
+    $sth->addField('fm', array('pid', 'sessionid', 'websubmissionid', 'category', 'score', 'created'));
+    $sth->addExpression('fm.category', 'category');
+    $sth->groupBy('fm.category');
+    $sth->addExpression('MAX(fm.created)', 'created');
+    $sth->condition('sessionid', $curr_session);
+    // Execute the statement
+    $data = $sth->execute();
+    // Get all the results
+    $results = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach($results as $keys => $values){
+
+      $results_score = \Drupal::database()->select('digital_maturity_score', 'n')
+      ->fields('n', array('pid', 'sessionid', 'websubmissionid', 'category', 'score', 'created'))
+      ->condition('created', $values['created'])
+      ->condition('category', $values['category'])
+      ->execute()->fetchAllAssoc('pid');
+
+
+    // print_r($results_score);die;
+   
+
+        foreach ($results_score as $key => $value) {
+          if( $value->category == 'productivity-collaborations' ){
+            $variables['final_score_prod'] = $value->score;
+            $score_prod = $value->score;
+          }elseif ($value->category == 'analytics-intelligence') {
+            $variables['final_score_ana'] = $value->score;
+            $score_ana = $value->score;
+          }elseif ($value->category == 'flexibility-efficiency') {
+            $variables['final_score_flex'] = $value->score;
+             $score_flex = $value->score;
+          }elseif ($value->category == 'security_and_compliance') {
+            $variables['final_score_sec'] = $value->score;
+             $score_sec = $value->score;
+          }elseif ($value->category == 'mobility') {
+            $variables['final_score_mob'] = $value->score;
+             $score_mob = $value->score;
+          }
+          }
+    }
+
+    $final_score = array($score_prod, $score_ana, $score_flex, $score_sec, $score_mob);
+    $count_nonempty = count(array_filter($final_score));
+    $variables['final_digital_score'] = ($score_prod + $score_ana + $score_flex + $score_sec + $score_mob)/$count_nonempty;
+ 
+   
+// foreach($results as $keys => $values){
+//       // $session[$keys]['websubmissionid'] = $values->websubmissionid;
+//       // $session[$keys]['category'] = $values->category;
+//       // $session[$keys]['score'] = $values->score;
+//       //$session['category'][] = $values->category;
+//       $session['created'][] = $values->created;
+// }
+//   print_r($results);die;
+
+//   unset($result1);
+//   $result1 = [];
+//   $result1 =  explode("&",$_SERVER['QUERY_STRING']); 
+
+//   $result2 =  explode("=",$result1[0]);
+//   $result3 =  explode("=",$result1[1]);
+  
+//   $variables['result_score'] = $result;
+//   $variables['final_score'] = $result2[1];
+//   $variables['myname2'] = $result3[1];
+
+// if( $result3[1] == 'productivity-collaborations' ){
+//   $variables['final_score_prod'] = $result2[1];
+// }elseif ($result3[1] == 'analytics-intelligence') {
+//   $variables['final_score_ana'] = $result2[1];
+// }elseif ($result3[1] == 'flexibility-efficiency') {
+//   $variables['final_score_flex'] = $result2[1];
+// }elseif ($result3[1] == 'security_and_compliance') {
+//   $variables['final_score_sec'] = $result2[1];
+// }elseif ($result3[1] == 'mobility') {
+//   $variables['final_score_mob'] = $result2[1];
+// }
+  
+}

@@ -1,0 +1,9 @@
+assess.review:
+  path: '/review/{id_param}'
+  defaults:
+    _controller: 'Drupal\assess\Controller\AssessController::content'
+    _title: 'Review Your Answer'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: FALSE

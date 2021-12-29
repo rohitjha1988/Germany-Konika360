@@ -1,0 +1,197 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Bartik theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Database\Database;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+
+
+/**
+ * Implements hook_preprocess_HOOK() for HTML document templates.
+ *
+ * Adds body classes if certain regions have content.
+ 
+function assessment_preprocess_node(&$variables)
+{
+ $result = array();
+ $result =  explode("=",$_SERVER['QUERY_STRING']);
+ 
+ $variables['url_string'] = $result[1];
+
+
+
+}
+*/
+
+
+function assessment_preprocess_page(&$variables){
+  global $base_url;
+  $variables['base_url_front'] = $base_url;
+   
+}
+
+function assessment_preprocess_node(&$variables){
+  global $base_url;
+  $variables['base_url'] = $base_url;
+  $curr_session2 = $_SESSION['assess']['sessionid'];
+
+$result = array();
+  $result =  explode("=", $_SERVER['QUERY_STRING']);
+  $variables['url_string'] = $result[1];
+  unset($result1);
+  $result1 = [];
+  $result1 =  explode("&", $_SERVER['QUERY_STRING']);
+  $result4 =  explode("=", $result1[1]);
+  $result_id =  explode("=", $result1[2]);
+  $subID = \Drupal::database()->select('digital_maturity_score', 'n')
+      ->fields('n', array('pid', 'sessionid', 'websubmissionid', 'category', 'score', 'created'))
+      ->condition('sessionid', $curr_session2)
+      ->execute()->fetchAllAssoc('pid');
+
+      //print_r($subID);die;
+foreach($subID as $keys => $sub_val){
+  if($sub_val->category == 'productivity-collaborations'){
+    $variables['id_param_prod'] = $sub_val->websubmissionid;
+   }
+   if($sub_val->category == 'analytics-intelligence'){
+    $variables['id_param_ana'] = $sub_val->websubmissionid;
+   }
+   if($sub_val->category == 'flexibility-efficiency'){
+    $variables['id_param_flex'] = $sub_val->websubmissionid;
+   }
+   if($sub_val->category == 'security_and_compliance'){
+    $variables['id_param_sec'] = $sub_val->websubmissionid;
+   }
+   if($sub_val->category == 'mobility'){
+    $variables['id_param_mob'] = $sub_val->websubmissionid;
+   }
+}
+
+  $request = \Drupal::request();
+  if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
+    $title = \Drupal::service('title_resolver')->getTitle($request, $route);
+  }
+  $variables['#cache']['max-age'] = 0;
+  \Drupal::service('page_cache_kill_switch')->trigger();
+if($title == 'Results'){
+  // drupal_flush_all_caches();
+  $curr_session = $_SESSION['assess']['sessionid'];
+// $results_score = \Drupal::database()->select('digital_maturity_score', 'n')
+//       ->fields('n', array('pid','score'))
+//       ->condition('sessionid', $curr_session)
+//       ->execute()->fetchAllAssoc('pid');
+// print_r($results_score);die;
+
+    $connection = Database::getConnection();
+    $sth = $connection->select('digital_maturity_score', 'fm');
+    $sth->addField('fm', array('pid', 'sessionid', 'websubmissionid', 'category', 'score', 'created'));
+    $sth->addExpression('fm.category', 'category');
+    $sth->groupBy('fm.category');
+    $sth->addExpression('MAX(fm.created)', 'created');
+    $sth->condition('sessionid', $curr_session);
+    // Execute the statement
+    $data = $sth->execute();
+    // Get all the results
+    $results = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach($results as $keys => $values){
+
+      $results_score = \Drupal::database()->select('digital_maturity_score', 'n')
+      ->fields('n', array('pid', 'sessionid', 'websubmissionid', 'category', 'score', 'created'))
+      ->condition('created', $values['created'])
+      ->condition('category', $values['category'])
+      ->execute()->fetchAllAssoc('pid');
+
+        foreach ($results_score as $key => $value) {
+          if( $value->category == 'productivity-collaborations' ){
+            $variables['final_score_prod'] = $value->score;
+            $score_prod = $value->score;
+          }elseif ($value->category == 'analytics-intelligence') {
+            $variables['final_score_ana'] = $value->score;
+            $score_ana = $value->score;
+          }elseif ($value->category == 'flexibility-efficiency') {
+            $variables['final_score_flex'] = $value->score;
+             $score_flex = $value->score;
+          }elseif ($value->category == 'security_and_compliance') {
+            $variables['final_score_sec'] = $value->score;
+             $score_sec = $value->score;
+          }elseif ($value->category == 'mobility') {
+            $variables['final_score_mob'] = $value->score;
+             $score_mob = $value->score;
+          }
+          }
+    }
+
+    $final_score = array($score_prod, $score_ana, $score_flex, $score_sec, $score_mob);
+    $count_nonempty = count(array_filter($final_score));
+    $variables['final_digital_score'] = ($score_prod + $score_ana + $score_flex + $score_sec + $score_mob)/$count_nonempty;
+  }
+  elseif ($title == "Download Report") {
+    
+    // Development for download report
+    $result = array();
+    $result =  explode("=", $_SERVER['QUERY_STRING']);
+    if($result[0] == 'id'){
+    $connection = Database::getConnection();
+    $sths = $connection->select('digital_maturity_score', 'fm');
+    $sths->addField('fm', array('pid', 'sessionid', 'websubmissionid','websubmissionid2', 'category', 'score', 'created','firstname','lastname','email','mobile'));
+    $sths->addExpression('fm.category', 'category');
+    $sths->groupBy('fm.category');
+    $sths->addExpression('MAX(fm.created)', 'created');
+    $sths->condition('sessionid', $result[1]);
+    // Execute the statement
+    $data_final = $sths->execute();
+    // Get all the results
+    $results_report = $data_final->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach($results_report as $key_s => $value_new){
+     
+      $results_final = \Drupal::database()->select('digital_maturity_score', 'n')
+      ->fields('n', array('pid', 'sessionid', 'websubmissionid','websubmissionid2', 'category', 'score', 'created','firstname','lastname','email','mobile'))
+      ->condition('created', $value_new['created'])
+      ->condition('category', $value_new['category'])
+      ->execute()->fetchAllAssoc('pid');
+
+
+      // print_r($results_final);
+      foreach ($results_final as $key => $value_cat) {
+        $variables['name'] = $value_cat->firstname .' '. $value_cat->lastname;
+        $variables['email'] = $value_cat->email;
+        $variables['phone'] = $value_cat->mobile;
+        if( $value_cat->category == 'productivity-collaborations' ){
+          $variables['final_score_prod_new'] = $value_cat->score;
+          $score_prod_new = $value_cat->score;
+        }elseif ($value_cat->category == 'analytics-intelligence') {
+          $variables['final_score_ana_new'] = $value_cat->score;
+          $score_ana_new = $value_cat->score;
+        }elseif ($value_cat->category == 'flexibility-efficiency') {
+          $variables['final_score_flex_new'] = $value_cat->score;
+           $score_flex_new = $value_cat->score;
+        }elseif ($value_cat->category == 'security_and_compliance') {
+          $variables['final_score_sec_new'] = $value_cat->score;
+           $score_sec_new = $value_cat->score;
+        }elseif ($value_cat->category == 'mobility') {
+          $variables['final_score_mob_new'] = $value_cat->score;
+           $score_mob_new = $value_cat->score;
+        }
+        }
+  }
+
+    $final_score_new = array($score_prod_new, $score_ana_new, $score_flex_new, $score_sec_new, $score_mob_new);
+    $count_nonempty_new = count(array_filter($final_score_new));
+    $variables['final_digital_score_new'] = ($score_prod_new + $score_ana_new + $score_flex_new + $score_sec_new + $score_mob_new)/$count_nonempty_new;
+    
+    }
+    //die;
+    // else{
+    //   print('To get the download report submit the assessment form.');die;
+    // }
+  }  
+  
+}

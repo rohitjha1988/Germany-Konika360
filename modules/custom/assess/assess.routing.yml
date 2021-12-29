@@ -1,0 +1,18 @@
+assess.review:
+  path: 'review/{webform}/submission/{webform_submission}'
+  defaults:
+    _controller: '\Drupal\webform\Controller\WebformSubmissionViewController::view'
+    _title_callback: '\Drupal\webform\Controller\WebformSubmissionViewController::title'
+    view_mode: 'html'
+  requirements:
+    _permission: 'access content'
+
+assess.review2:
+  path: '/review/{category}/{id_param}'
+  defaults:
+    _controller: 'Drupal\assess\Controller\AssessController::content'
+    _title: 'Review Your Answer'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: FALSE

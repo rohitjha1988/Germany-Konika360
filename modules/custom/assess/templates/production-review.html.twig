@@ -1,0 +1,472 @@
+
+
+
+<!-- start header -->
+		<link
+		rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- start header -->
+		<header>
+			<div
+				class="left-nav">
+
+				<!-- start logo -->
+				 <div class="col-lg-4 dx360d padding-10px-left innerresult">
+      <a href="{{ url('<front>') }}" title="Konica Minolta" class="">
+
+      <img src="https://dx360.konicaminolta.co.uk/themes/Assessment/images/dx360dgree.png"></a>
+      <a href="{{ url('<front>') }}" title="Konica Minolta" class="">
+
+      <img src="https://dx360.konicaminolta.co.uk/themes/Assessment/images/logo.svg"></a>
+
+</div>
+				<!-- end logo -->
+
+				<!-- end logo -->
+
+				<div class="bottom-menu-icon  right-menu-button text-extra-dark-gray nav-icon ">
+					<a href="javascript:void(0);" class=" opneside active" id="showRightPush">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</a>
+				</div>
+				<div class="sidenew">
+					<div class="sidendat">
+						<div class="sideHEad">
+							<h2>DX360° Assessment</h2>
+							<button class="btnclose">
+								<a href="javascript:void(0);" class="right-menu-button text-extra-dark-gray nav-icon active" id="showRightPush">
+									<span></span>
+									<span></span>
+									<span></span>
+									<span></span>
+								</a>
+							</button>
+
+						</div>
+						<div class="MidData">
+
+							<div class="Sidemenus">
+								<ul>
+									<li class="hasmenu">
+										<a href="{{ url('<front>') }}" class="defaultcolors">DX360° HomePage <i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+
+									</li>
+									<li>
+										<a href="https://dx360.konicaminolta.co.uk/productivity-and-collaboration" class="hasmenu produccolor">PRODUCTIVITY & COLLABORATION<i class="fa fa-angle-right"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/security-and-compliance" class="hasmenu sectcolor">SECURITY & COMPLIANCE<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/mobility" class="hasmenu mobilitycolor">MOBILITY<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/flexibility-efficiency-and-sustainability" class="hasmenu flexibilitycolor">FLEXIBILITY, EFFICIENCY &
+											<br>SUSTAINABILITY<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/analytics-and-intelligence" class="hasmenu analyticescolor">ANALYTICS & INTELLIGENCE<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+
+								</ul>
+							</div>
+							<div class="Sidemenus blubars secndcolrsec">
+         <ul>
+              <li><a href=" https://www.konicaminolta.co.uk" class="">konica minolta homepage <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/it-services">it services<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href=" https://www.konicaminolta.co.uk/en-gb/innovation">innovation<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/office-printing">office printing<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href=" https://www.konicaminolta.co.uk/en-gb/professional-printing">professional printing<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/customer-support/faqs">support & faqs<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              
+              
+            </ul>
+         </div>
+          </div>
+      
+          <div class="Socialbar">
+              
+              <div class="sobar">
+              
+              <h2>Follow Us :</h2>
+                  <ul>
+                  <li><a href="https://www.facebook.com/KonicaMinoltaBusinessSolutionsUKLtd/"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="https://www.linkedin.com/company/konica-minolta-business-solutions-uk-ltd/"><i class="fa fa-linkedin"></i></a></li>
+                  <li><a href="https://twitter.com/konicaminoltaGB"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="https://www.youtube.com/user/konicaminoltatv"><i class="fa fa-youtube-play"></i></a></li>
+                  <li><a href="https://www.instagram.com/Konica_minolta_uk/"><i class="fa fa-instagram"></i></a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      </div>
+				<div class="serchover"></div>
+			</div>
+
+		</header>
+		<!-- end header -->
+
+
+
+ <section class="pagesec">
+      <div class="container">
+          <h2>DX360° ASSESSMENT</h2>
+            <p>YOUR RESPONSES</p>
+          </div>
+      </section>
+
+<section class="questionsbox">
+<div class="container">
+       <h1 class="producreviewtit">Productivity & Collaboration</h1>
+<div id="flex">
+{% set id = 1 %}
+{% for key, value in prod_assess %}
+
+{% if key == 'select_the_statements_that_reflect_your_workplace_and_operations' %}
+        <div class="ques-ans-box" id="onesp">
+<div class="flexques">Question One : Select the statements that reflect your workplace and operations.</div>
+<p>
+ Your response is highlighted below <br/>  
+    
+     {% if 'We have too many tools for collaboration' in value %}
+    <b class="productiycolors">1. We have too many tools for collaboration</b> </br>
+     {% else %}
+        1. We have too many tools for collaboration</br>
+     {% endif %}
+
+     {% if 'I do not have a clear and unified view of team, department and even business wide updates and projects alongside my own' in value %}
+      <b class="productiycolors">2. I do not have a clear and unified view of team, department and even business wide updates and projects alongside my own</b> </br>
+     {% else %}
+        2. I do not have a clear and unified view of team, department and even business wide updates and projects alongside my own</br>
+     {% endif %}
+    
+     
+     {% if 'For certain topics and problems, I am unsure of who of my colleagues I need to contact' in value %}
+      <b class="productiycolors">3. For certain topics and problems, I am unsure of who of my colleagues I need to contact</b> </br>
+     {% else %}
+        3. For certain topics and problems, I am unsure of who of my colleagues I need to contact</br>
+     {% endif %}
+     
+    
+     {% if 'I struggle to book in time and collaborate with customers and partners' in value %}
+      <b class="productiycolors">4. I struggle to book in time and collaborate with customers and partners</b> </br>
+     {% else %}
+        4. I struggle to book in time and collaborate with customers and partners</br>
+     {% endif %}
+     
+     
+     {% if 'We often have problems with conflicting and siloed communications and content versions whilst working on projects' in value %}
+      <b class="productiycolors">5. We often have problems with conflicting and siloed communications and content versions whilst working on projects</b> </br>
+     {% else %}
+        5. We often have problems with conflicting and siloed communications and content versions whilst working on projects</br>
+     {% endif %}
+     
+     {% if 'None of these' in value %}
+      <b class="productiycolors">6. None of these</b> </br>
+     {% else %}
+        6. None of these</br>
+     {% endif %}
+    
+</p>
+ </div>
+{% endif %}
+
+
+{% if key == 'what_percentage_of_your_workforce_when_working_remotely_have_acc' %}
+ <div class="ques-ans-box" id="twosp">
+<div class="flexques">Question Two: What percentage of your time is impacted or wasted due to IT and software issues or waiting for IT support and a fix?</div>
+ Answer: <b class="productiycolors">{{ value }}%</b>
+     </div>
+{% endif %}
+
+
+
+{% if key == 'are_you_struggling_with_lots_of_manual_and_repetitive_tasks_asso' %}
+<div class="ques-ans-box" id="threesp">
+<div class="flexques">Question Three: Many businesses and operations struggle with lots of manual and repetitive tasks associated with processing information. Which of the following apply to you?</div>
+<p>
+ Your response is highlighted below <br/>  
+    
+     {% if 'There is a lot of manual handling of documents and information such as data entry, scanning paper forms, processing data, sending forms e.g. in employee on-boarding, orders processing or invoicing' in value %}
+      <b class="productiycolors">1. There is a lot of manual handling of documents and information such as data entry, scanning paper forms, processing data, sending forms e.g. in employee on-boarding, orders processing or invoicing</b> </br>
+     
+     {% else %}
+        1. There is a lot of manual handling of documents and information such as data entry, scanning paper forms, processing data, sending forms e.g. in employee on-boarding, orders processing or invoicing</br>
+     {% endif %}
+
+     {% if 'I am being slowed down by too many manual and repetitive tasks' in value %}
+      <b class="productiycolors">2. I am being slowed down by too many manual and repetitive tasks</b> </br>
+     {% else %}
+        2. I am being slowed down by too many manual and repetitive tasks</br>
+     {% endif %}
+    
+     
+     {% if 'Over-reliance on traditional forms of communications such as phone and email creates delays and errors' in value %}
+     <b class="productiycolors">3. Over-reliance on traditional forms of communications such as phone and email creates delays and errors</b> </br>
+     {% else %}
+        3. Over-reliance on traditional forms of communications such as phone and email creates delays and errors</br>
+     {% endif %}
+     
+    
+     {% if 'We do not yet use digital signatures or digital contracts for approvals and agreements' in value %}
+      <b class="productiycolors">4. We do not yet use digital signatures or digital contracts for approvals and agreements</b> </br>
+     {% else %}
+        4. We do not yet use digital signatures or digital contracts for approvals and agreements</br>
+     {% endif %}
+     
+     
+     {% if 'We spend a lot of our time manually completing transactions or correcting errors introduced further up the process' in value %}
+     <b class="productiycolors">5. We spend a lot of our time manually completing transactions or correcting errors introduced further up the process</b> </br>
+     {% else %}
+        5. We spend a lot of our time manually completing transactions or correcting errors introduced further up the process</br>
+     {% endif %}
+     
+     {% if 'None of these' in value %}
+      <b class="productiycolors">6. None of these</b> </br>
+     {% else %}
+        6. None of these</br>
+     {% endif %}
+    
+</p>
+</div>
+{% endif %}
+
+ 
+{% if key == 'from_0_to_100_do_you_have_a_seamless_work_experience_where_you_c' %}
+<div class="ques-ans-box" id="foursp">
+<div class="flexques">Question Four: What percentage of your employees can seamlessly and easily process, edit, scan, print and archive documents when they need it, and from wherever they are working?</div>
+ Answer: <b class="productiycolors">{{ value }}%</b>
+    </div>
+{% endif %}
+
+
+
+{% if key == 'to_what_extend_supports_your_servicedesk_your_customer_s_needs_' %}
+<div class="ques-ans-box" id="fivesp">
+<div class="flexques">Question Five: Which of these situations are you familiar with?
+</div>
+ Your response is highlighted below <br/>  
+    
+     {% if 'I often do not find the file I am looking for' in value %}
+      <b class="productiycolors">1. I often do not find the file I am looking for</b> </br>
+     
+     {% else %}
+        1. I often do not find the file I am looking for</br>
+     {% endif %}
+
+     {% if 'There are too many storage locations for files in my company' in value %}
+     <b class="productiycolors">2. There are too many storage locations for files in my company</b> </br>
+     {% else %}
+        2. There are too many storage locations for files in my company</br>
+     {% endif %}
+    
+     
+     {% if 'I am not familiar with security aspects of my documents' in value %}
+      <b class="productiycolors">3. I am not familiar with security aspects of my documents</b> </br>
+     {% else %}
+        3. I am not familiar with security aspects of my documents</br>
+     {% endif %}
+     
+     {% if 'We have a lot of duplicate information and the connections between similar or related files are often not known to me' in value %}
+     <b class="productiycolors">4. We have a lot of duplicate information and the connections between similar or related files are often not known to me</b> </br>
+     {% else %}
+        4. We have a lot of duplicate information and the connections between similar or related files are often not known to me</br>
+     {% endif %}
+    
+     {% if 'I often have to search through many documents to find one specific sentence or piece of information that I was looking for' in value %}
+      <b class="productiycolors">5. I often have to search through many documents to find one specific sentence or piece of information that I was looking for</b> </br>
+     {% else %}
+        5. I often have to search through many documents to find one specific sentence or piece of information that I was looking for</br>
+     {% endif %}
+     
+     {% if 'There is no formal approach for managing controlled departmental or company official documents, policies and templates' in value %}
+     <b class="productiycolors">6. There is no formal approach for managing controlled departmental or company official documents, policies and templates</b> </br>
+     {% else %}
+        6. There is no formal approach for managing controlled departmental or company official documents, policies and templates</br>
+     {% endif %}
+    
+</p>
+</div>
+{% endif %}
+
+{% endfor %}
+
+</div>
+</div>
+</section>
+
+
+
+
+<section class="piesection">
+<div class="container">
+ 
+    
+    <div class="col-12 col-lg-6 text-center wow fadeInLeft padtopsre" style="visibility: visible; animation-name: fadeInLeft;">
+        
+        <div class="mobirevcag commrevilastcss">
+        <span>Mobility:</span> Understand how to gain a competitive edge by
+being more responsive, accessible, and be able to work
+whenever, and wherever.
+        </div>
+         <div class="flexirevcag commrevilastcss">
+        <span>Flexibility, Efficiency & Sustainability:</span> Understand the
+flexibility of your operations and how to deliver new
+performances, efficiencies, and customer experiences.
+        </div>
+         <div class="analytrevcag commrevilastcss">
+        <span>Analytics & Intelligence:</span> Understand how to visualise
+trends and insights about your business and make better
+decisions and predictions faster to enable growth.
+
+        </div>
+         <div class="secicomprevcag commrevilastcss">
+        <span>Security & Compliance:</span> Understand how information
+management and the workforce should work in harmony
+to ensure data security and compliance and remove risks
+to your business.
+        </div>
+         <div class="produccalrevcag commrevilastcss">
+        <span>Productivity & Collaboration:</span> Understand and transform
+how your people and teams use technology to interact,
+communicate and collaborate with each other and with
+your customers - creating engaged and effective
+workforces.
+        </div>
+        
+        
+    </div>
+<div class="col-12 col-lg-6 text-center wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">
+    <h1 class="selctcaterev">Please select a category below to continue your journey or to start again.</h1>
+<div
+							class="component csstransforms">
+
+							<!-- Start Nav Structure -->
+
+							<div class="cn-wrapper opened-nav" id="cn-wrapper">
+								<ul class="fntosf">
+									
+									
+										<li>
+											<div class="flexd">
+												<h6>FLEXIBILITY, EFFICIENCY & SUSTAINABILITY</h6><br>
+												<a href="../../flexibility-efficiency-and-sustainability/flexibility-assessment">Start Now</a>
+											</div>
+										</li>
+							
+										<li>
+											<div class="flexd analyresults">
+												<h6>ANALYTICS & INTELLIGENCE</h6><br>
+												<a href="../../analytics-and-intelligence/assessment">Start Now</a>
+											</div>
+										</li>
+							
+										<li>
+											<div class="produrelf">
+												<h6>SECURITY & COMPLIANCE</h6><br>
+												<a href="../../security-and-compliance/assessment">Start Now</a>
+											</div>
+										</li>
+									
+										<li>
+											<div class="flexd securityrestls">
+                                                <h6>PRODUCTIVITY & COLLABORATION</h6><br>
+												<a href="../../productivity-and-collaboration/assessment">Start Again</a>
+												
+											</div>
+										</li>
+									
+								
+										<li>
+											<div class="mpbolityrelst">
+												<h6>MOBILITY</h6><br>
+												<a href="../../mobility/assessment">Start Now</a>
+											</div>
+										</li>
+							
+
+								</ul>
+							</div>
+							<!-- End of Nav Structure -->
+						</div>
+    
+</div>
+    
+    
+    
+    
+    </div>
+</section> 
+    
+		<!-- start footer -->
+<footer class="footer-standard-dark bg-dark-footer" id="footer">
+  <div class="footer-widget-area padding-20px-tb sm-padding-30px-tb padding-30px-btm">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 widget sm-text-center">
+
+          <!-- start social media -->
+          <div class="social-icon-style-8 d-inline-block vertical-align-middle">
+            <ul class="small-icon no-margin-bottom">
+              <li> <a class="facebook text-white-2" href="https://www.facebook.com/KonicaMinoltaBusinessSolutionsUKLtd/" target="_blank"><img src="../../themes/Assessment/images/fb-rethink.svg" alt="Facebook logo"></a> </li>
+              <li><a class="linkedin text-white-2" href="https://www.linkedin.com/company/konica-minolta-business-solutions-uk-ltd/" target="_blank"><img src="../../themes/Assessment/images/linkedin-rethink.svg" alt="Linkedin logo"></a></li>
+              <li><a class="twitter text-white-2" href="https://twitter.com/konicaminoltaGB" target="_blank"><img src="../../themes/Assessment/images/twitter-rethink.svg" alt="Twitter logo"></a></li>
+              <li><a class="youtube text-white-2" href="https://www.youtube.com/user/konicaminoltatv" target="_blank"><img src="../../themes/Assessment/images/youtube-rethink.svg" alt="Youtube logo"></a></li>
+            </ul>
+          </div>
+          <!-- end social media -->
+        </div>
+
+        <!-- start text image -->
+        <div class="col-lg-6 col-md-6 widget md-padding-15px-left text-md-right text-center padding-5px-top">
+          <img src="themes/Assessment/images/gsti_text.svg" alt="">
+        </div>
+        <!-- end text image -->
+      </div>
+    </div>
+  </div>
+  <div class="border-top border-color-medium-dark-gray margin-60px-lr padding-16px-top">
+
+    <div class="bg-dark-footer padding-20px-bottom text-center sm-padding-30px-tb">
+      <div class="container padding-0">
+        <div class="row">
+          <!-- start copyright -->
+          <div class="col-md-6 text-md-left text-small text-center text-medium-gray">
+          <a href="https://www.konicaminolta.co.uk/en-gb/terms-of-use" target="_blank" class="text-extra-light-gray footer-links">Term of Use</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="https://dx360.konicaminolta.co.uk/sites/default/files/DX360Assessment-PrivacyPolicy-Website-v1-0.pdf" target="_blank" class="text-extra-light-gray footer-links">Privacy Policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="https://dx360.konicaminolta.co.uk/sitemap" class="text-extra-light-gray footer-links">Sitemap</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="https://www.konicaminolta.co.uk/en-gb/imprint" target="_blank" class="text-extra-light-gray footer-links">Imprint</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="javascript:void(0);" class="text-extra-light-gray footer-links cookies">Cookie Settings</a></div>
+          <div class="col-md-6 text-md-right text-small text-center text-extra-light-gray sm-padding-30px-top"> &copy; 2021 Konica Minolta Business Solutions (UK) Limited.
+          </div>
+          <!-- end copyright -->
+        </div>
+      </div>
+    </div>
+</footer>
+<!-- end footer -->
+
+<script id="usercentrics-cmp" src="https://app.usercentrics.eu/browser-ui/latest/loader.js" data-settings-id="TYs1T85gv" async></script>
+<script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/modernizr.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/bootstrap.bundle.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.easing.1.3.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/skrollr.min.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/smooth-scroll.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.appear.js"></script><!-- menu navigation --><script type="text/javascript" src="../../themes/Assessment/js/classy/bootsnav.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.nav.js"></script><!-- animation --><script type="text/javascript" src="../../themes/Assessment/js/classy/wow.min.js"></script><!-- page scroll --><script type="text/javascript" src="../../themes/Assessment/js/classy/page-scroll.js"></script><!-- swiper carousel --><script type="text/javascript" src="../../../themes/Assessment/js/classy/swiper.min.js"></script><!-- counter --><script type="text/javascript" src="../../../themes/Assessment/js/classy/jquery.count-to.js"></script><!-- parallax --><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.stellar.js"></script><!-- magnific popup --><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.magnific-popup.min.js"></script><!-- portfolio with shorting tab --><script type="text/javascript" src="../../themes/Assessment/js/classy/isotope.pkgd.min.js"></script><!-- themes/Assessment/images loaded --><script type="text/javascript" src="../../themes/Assessment/js/classy/imagesloaded.pkgd.min.js"></script><!-- pull menu --><script type="text/javascript" src="../../themes/Assessment/js/classy/classie.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/hamburger-menu.js"></script><!-- counter  --><script type="text/javascript" src="../../themes/Assessment/js/classy/counter.js"></script><!-- fit video  --><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.fitvids.js"></script><!-- skill bars  --><script type="text/javascript" src="../../themes/Assessment/js/classy/skill.bars.jquery.js"></script><!-- justified gallery  --><script type="text/javascript" src="../../themes/Assessment/js/classy/justified-gallery.min.js"></script><!--pie chart--><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.easypiechart.min.js"></script><!-- retina --><script type="text/javascript" src="../../themes/Assessment/js/classy/retina.min.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/main.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/canvasjsnew.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/canvasjs.min.js"></script><script>$(".hasmenu").click(function () {
+$(".hasmenu").removeClass("active")
+$(this).addClass("active");
+
+
+//          $(".submenus").slideUp()
+$(this).find(".Sidemenus").show();
+});
+$(".opneside").click(function () {
+$(".sidendat,.serchover").addClass("active");
+
+});
+$(".btnclose").click(function () {
+$(".sidendat,.serchover").removeClass("active");
+
+});</script>

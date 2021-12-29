@@ -1,0 +1,449 @@
+<?php
+use Drupal\Core\Database\Database;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+
+function assess_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+
+    if ($form_id == 'webform_submission_general_question_add_form' || $form_id == 'webform_submission_general_question_security_add_form' || $form_id == 'webform_submission_general_question_analytics_add_form' || $form_id == 'webform_submission_general_question_mobility_add_form' || $form_id == 'webform_submission_general_question_flexibility_add_form') {
+        $form['actions']['submit']['#value'] = t('PROCEED');
+    }
+
+    if ($form_id == 'webform_submission_productivity_collaborations_add_form') {
+        if ($form['progress']['#current_page'] === 'fifth') {
+            foreach (array_keys($form['actions']) as $action) {
+                if ($action != 'wizard_prev' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+
+                    $form['actions'][$action]['#submit'][] = 'assess_form_submit';
+                }
+            }
+        }
+    } elseif ($form_id == 'webform_submission_mobility_add_form') {
+        if ($form['progress']['#current_page'] === 'fifth') {
+            foreach (array_keys($form['actions']) as $action) {
+                if ($action != 'wizard_prev' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+
+                    $form['actions'][$action]['#submit'][] = 'assess_mobilty_form_submit';
+                }
+            }
+        }
+    } elseif ($form_id == 'webform_submission_security_and_compliance_add_form') {
+        if ($form['progress']['#current_page'] === 'fifth') {
+            foreach (array_keys($form['actions']) as $action) {
+                if ($action != 'wizard_prev' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+
+                    $form['actions'][$action]['#submit'][] = 'assess_security_and_compliance_form_submit';
+                }
+            }
+        }
+    } elseif ($form_id == 'webform_submission_flexibility_efficiency_and_susta_add_form') {
+        if ($form['progress']['#current_page'] === 'fifth') {
+            foreach (array_keys($form['actions']) as $action) {
+                if ($action != 'wizard_prev' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+
+                    $form['actions'][$action]['#submit'][] = 'assess_flexibility_efficiency_and_compliance_form_submit';
+                }
+            }
+        }
+    } elseif ($form_id == 'webform_submission_analytics_and_intelligence_add_form') {
+        if ($form['progress']['#current_page'] === 'fifth') {
+            foreach (array_keys($form['actions']) as $action) {
+                if ($action != 'wizard_prev' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+
+                    $form['actions'][$action]['#submit'][] = 'assess_analytics_and_intelligence_form_submit';
+                }
+            }
+        }
+    } elseif ($form_id == 'webform_submission_download_report_add_form') {
+        $form['actions']['submit']['#submit'][] = 'download_report_form_submit';
+    }
+}
+function assess_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{global $base_url;
+    $sid = $form_state->getFormObject()->getEntity()->id();
+    $a = $form_state->getValue('select_the_statements_that_reflect_your_workplace_and_operations');
+    $b = $form_state->getValue('what_percentage_of_your_workforce_when_working_remotely_have_acc');
+    $c = $form_state->getValue('are_you_struggling_with_lots_of_manual_and_repetitive_tasks_asso');
+    $d = $form_state->getValue('from_0_to_100_do_you_have_a_seamless_work_experience_where_you_c');
+    $e = $form_state->getValue('to_what_extend_supports_your_servicedesk_your_customer_s_needs_');
+    $anone = in_array("None of these", $a);
+    if (in_array("None of these", $a)) {
+        $aval = 100;
+    } else {
+        $aval = (100 - (count($a) * 20));
+    }
+
+    //$aval = (100 - (count($a) * 20));
+    $bval = (100 - $b);
+    $cnone = in_array("None of these", $c);
+    if (in_array("None of these", $c)) {
+        $cval = 100;
+    } else {
+        $cval = (100 - (count($c) * 17));
+    }
+    //$cval = (100 - (count($c) * 16.67));
+    $dval = $d;
+    $eval = (100 - (count($e) * 16.67));
+    $total = ($aval + $bval + $cval + $dval + $eval) / 5;
+    $msg = $aval . " " . $bval . " " . $cval . " " . $dval . " " . $eval;
+	print_r($msg);die;
+    //submitting the scores and assessment into custom table
+    $web_sub_id = $form_state->getFormObject()->getEntity()->id();
+    //set current session
+    session_start();
+    $sessionid = session_id();
+    $_SESSION['assess']['sessionid'] = $sessionid;
+    //set current date and time
+    date_default_timezone_set('Asia/Kolkata');
+    $created = strtotime(date('Y-m-d H:i:s'));
+    $conn = Database::getConnection();
+    $conn->insert('digital_maturity_score')->fields(
+        array(
+            'sessionid' => $_SESSION['assess']['sessionid'],
+            'websubmissionid' => $web_sub_id,
+            'category' => 'productivity-collaborations',
+            'score' => $total,
+            'created' => $created,
+        )
+    )->execute();
+
+    $response = new TrustedRedirectResponse($base_url . '/results?score=' . $total . '&category=productivity-collaborations' . '&sid=' . $sid);
+    $form_state->setResponse($response);
+}
+function assess_mobilty_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+    global $base_url;
+    $sid = $form_state->getFormObject()->getEntity()->id();
+    $ma = $form_state->getValue('what_percentage_of_your_workforce_when_working_remotely_have_acc');
+    $mb = $form_state->getValue('what_percentage_of_your_workforce_have_seamless_access_to_the_in');
+    $mc = $form_state->getValue('when_your_workforce_is_working_remotely_is_their_it_still_manage');
+    $md = $form_state->getValue('employees_in_my_company_have_the_ability_to_');
+    $me = $form_state->getValue('are_there_certain_departmental_processes_or_systems_that_can_t_b');
+    $maval = $ma;
+    $mbval = $mb;
+	// print_r($mc);die;
+
+	// If ($mc= Yes){
+	// $mcval = 100;	
+	// }else{
+		// $mcval = 0;
+	// }
+		 $mcval = $mc;
+    $mdnone = in_array("None of these", $md);
+    if (in_array("None of these", $md)) {
+        $mdval = 100;
+    } else {
+        $mdval = (100 - (count($md) * 20));
+    }
+
+    $menone = in_array("None of these", $me);
+    if (in_array("None of these", $me)) {
+        $meval = 100;
+    } else {
+        $meval = (100 - (count($me) * 20));
+    }
+    //$mdval = (100 - (count($md) * 20));
+    //$meval = (100 - (count($me) * 20));
+    $total2 = ($maval + $mbval + $mcval + $mdval + $meval) / 5;
+    $mmsg = $maval . " " . $mbval . " " . $mcval . " " . $mdval . " " . $meval;
+	//print_r($mmsg);die;
+    $web_sub_id = $form_state->getFormObject()->getEntity()->id();
+    //set current session
+    session_start();
+    $sessionid = session_id();
+    $_SESSION['assess']['sessionid'] = $sessionid;
+    //set current date and time
+    date_default_timezone_set('Asia/Kolkata');
+    $created = strtotime(date('Y-m-d H:i:s'));
+    $conn = Database::getConnection();
+    $conn->insert('digital_maturity_score')->fields(
+        array(
+            'sessionid' => $_SESSION['assess']['sessionid'],
+            'websubmissionid' => $web_sub_id,
+            'category' => 'mobility',
+            'score' => $total2,
+            'created' => $created,
+        )
+    )->execute();
+
+    $response = new TrustedRedirectResponse($base_url . '/results?score=' . $total2 . '&category=mobility' . '&sid=' . $sid);
+    $form_state->setResponse($response);
+}
+function assess_security_and_compliance_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+    global $base_url;
+    $sid = $form_state->getFormObject()->getEntity()->id();
+    $sa = $form_state->getValue('it_is_the_backbone_of_most_businesses_today_how_resilient_and_se');
+    $sb = $form_state->getValue('do_you_have_a_recovery_plan_in_place_that_will_allow_you_to_retu');
+    $sc = $form_state->getValue('data_are_one_of_the_most_valuable_assets_of_your_company_on_a_sc');
+    $sd = $form_state->getValue('how_are_you_protecting_your_employees_customers_facilities_and_i');
+    $se = $form_state->getValue('how_mature_would_you_rate_your_endpoint_and_security_protection_');
+	$saval = $sa;
+	If ($sb == 'Yes'){
+	$sbval = 100;	
+	}else{
+		$sbval = 0;
+	}
+    //$sbval = $sb;
+    $scval = (($sc - 1) * 25);
+	$sdval = $sd;
+	
+    $seval = $se;
+    $total3 = ($saval + $sbval + $scval + $sdval + $seval) / 5;
+    $smsg = $saval . " " . $sbval . " " . $scval . " " . $sdval . " " . $seval;
+	print_r($smsg);die;
+    $web_sub_id = $form_state->getFormObject()->getEntity()->id();
+    //set current session
+    session_start();
+    $sessionid = session_id();
+    $_SESSION['assess']['sessionid'] = $sessionid;
+    //set current date and time
+    date_default_timezone_set('Asia/Kolkata');
+    $created = strtotime(date('Y-m-d H:i:s'));
+    $conn = Database::getConnection();
+    $conn->insert('digital_maturity_score')->fields(
+        array(
+            'sessionid' => $_SESSION['assess']['sessionid'],
+            'websubmissionid' => $web_sub_id,
+            'category' => 'security_and_compliance',
+            'score' => $total3,
+            'created' => $created,
+        )
+    )->execute();
+    $response = new TrustedRedirectResponse($base_url . '/results?score=' . $total3 . '&category=security_and_compliance' . '&sid=' . $sid);
+    $form_state->setResponse($response);
+}
+function assess_flexibility_efficiency_and_compliance_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+    global $base_url;
+    $sid = $form_state->getFormObject()->getEntity()->id();
+    $fa = $form_state->getValue('on_a_scale_of_1_lowest_to_5_highest_how_flexible_is_your_it_infr');
+    $fb = $form_state->getValue('which_of_the_following_statement_is_true_');
+    $fc = $form_state->getValue('from_0_to_100_how_much_do_you_agree_with_this_statement_communic');
+    $fd = $form_state->getValue('would_you_like_to_track_all_the_costs_associated_with_scanning_p');
+    $fe = $form_state->getValue('which_of_these_activities_are_currently_manual_and_repetitive_ta');
+    $faval = (($fa - 1) * 25);
+    $fnone = in_array("None of these", $fb);
+    if (in_array("None of these", $fb)) {
+        $fbval = 100;
+    } else {
+        $fbval = (100 - (count($fb) * 20));
+    }
+    //  $fbval = (100 - (count($fb) * 20));
+    $fcval = $fc;
+	
+    $fdval = $fd;
+    $fenone = in_array("We do not have paper-based processes anymore and/ or all repetitive tasks are automated", $fe);
+    if (in_array("We do not have paper-based processes anymore and/ or all repetitive tasks are automated", $fe)) {
+        $feval = 100;
+    } else {
+        $feval = (100 - (count($fe) * 20));
+    }
+    //$feval = (100 - (count($fe) * 20));
+    $total4 = ($faval + $fbval + $fcval + $fdval + $feval) / 5;
+    $fmsg = $faval . " " . $fbval . " " . $fcval . " " . $fdval . " " . $feval;
+	//print_r($fmsg);die;
+    $web_sub_id = $form_state->getFormObject()->getEntity()->id();
+    //set current session
+    session_start();
+    $sessionid = session_id();
+    $_SESSION['assess']['sessionid'] = $sessionid;
+    //set current date and time
+    date_default_timezone_set('Asia/Kolkata');
+    $created = strtotime(date('Y-m-d H:i:s'));
+    $conn = Database::getConnection();
+    $conn->insert('digital_maturity_score')->fields(
+        array(
+            'sessionid' => $_SESSION['assess']['sessionid'],
+            'websubmissionid' => $web_sub_id,
+            'category' => 'flexibility-efficiency',
+            'score' => $total4,
+            'created' => $created,
+        )
+    )->execute();
+    $response = new TrustedRedirectResponse($base_url . '/results?abc=' . $total4 . '&category=flexibility-efficiency' . '&sid=' . $sid);
+    $form_state->setResponse($response);
+}
+function assess_analytics_and_intelligence_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+    global $base_url;
+    $sid = $form_state->getFormObject()->getEntity()->id();
+    $aa = $form_state->getValue('which_areas_of_your_business_do_you_struggle_with_');
+    $ab = $form_state->getValue('do_you_actively_monitor_your_sensitive_data_such_as_personal_or_');
+    $ac = $form_state->getValue('do_you_actively_monitor_manage_key_applications_and_their_usage_');
+    $ad = $form_state->getValue('do_you_proactively_monitor_manage_your_it_environment_and_any_co');
+    $ae = $form_state->getValue('what_precentage_of_your_physical_infrastructure_or_operations_ar');
+    $anone = in_array("None of these", $aa);
+    if (in_array("None of these", $aa)) {
+        $aaval = 100;
+    } else {
+        $aaval = (100 - (count($aa) * 25));
+    }
+	//print_r($ab);die;
+	if ( $ab == 'Yes' ){
+		$abval = 100;	
+	}else{
+		$abval = 0;
+	}
+	//print_r($abval);die;
+	If ($ac == 'Yes'){
+	$acval = 100;	
+	}else{
+		$acval = 0;
+	}
+	
+	//print_r($acval);die;
+	If ($ad == 'Yes'){
+	$adval = 100;	
+	}else{
+		$adval = 0;
+	}
+    //$abval = $ab;
+    //$acval = $ac;
+    //$adval = $ad;
+    $aeval = $ae;
+    $total5 = ($aaval + $abval + $acval + $adval + $aeval) / 5;
+    $amsg = $aaval . " " . $abval . " " . $acval . " " . $adval . " " . $aeval;
+    $web_sub_id = $form_state->getFormObject()->getEntity()->id();
+	
+	//print_r($amsg);die;
+    //set current session
+    session_start();
+    $sessionid = session_id();
+    $_SESSION['assess']['sessionid'] = $sessionid;
+    //set current date and time
+    date_default_timezone_set('Asia/Kolkata');
+    $created = strtotime(date('Y-m-d H:i:s'));
+    $conn = Database::getConnection();
+    $conn->insert('digital_maturity_score')->fields(
+        array(
+            'sessionid' => $_SESSION['assess']['sessionid'],
+            'websubmissionid' => $web_sub_id,
+            'category' => 'analytics-intelligence',
+            'score' => $total5,
+            'created' => $created,
+        )
+    )->execute();
+    $response = new TrustedRedirectResponse($base_url . '/results?score=' . $total5 . '&category=analytics-intelligence' . '&sid=' . $sid);
+    $form_state->setResponse($response);
+}
+function download_report_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+    global $base_url;
+    $values = \Drupal::request()->request->all();
+    $first_name = $values['first_name'];
+    $last_name = $values['last_name'];
+    $email = $values['email'];
+    $company = $values['company'];
+    $mobile = $values['mobile_number'];
+    $jobtitle = $values['job_title'];
+    $message = $values['message'];
+    $agree_status = $values['i_agree_to_occasionally_receive_marketing_updates_from_konica_mi'];
+	
+	
+    $sid = $form_state->getFormObject()->getEntity()->id();
+    global $base_url;
+    //set current session
+    session_start();
+    $sessionid = session_id();
+    $_SESSION['assess']['sessionid'] = $sessionid;
+    //set current date and time
+    date_default_timezone_set('Asia/Kolkata');
+    $created = strtotime(date('Y-m-d H:i:s'));
+
+    $table = 'digital_maturity_score';
+    \Drupal::database()->update($table)
+        ->fields(array('firstname' => $first_name, 'lastname' => $last_name, 'email' => $email))
+        ->condition('sessionid', $_SESSION['assess']['sessionid'])
+        ->execute();
+
+    marketo_integration($first_name, $last_name, $email, $mobile, $company, $jobtitle, $message, $agree_status);
+
+}
+function assess_theme($existing, $type, $theme, $path)
+{
+    return [
+	'production_review' => ['variables' => ['prod_assess' => NULL], ],
+	'flexibility_review' => ['variables' => ['flex_assess' => NULL], ],
+	'mobility_review' => ['variables' => ['mob_assess' => NULL], ],
+	'security_review' => ['variables' => ['sec_assess' => NULL], ], 
+	'analytics_review' => ['variables' => ['ana_assess' => NULL], ], 
+	];
+}
+function marketo_integration($first_name, $last_name, $email, $mobile, $company, $jobtitle, $message, $agree_status){
+    $curl = curl_init();
+    
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://697-GBV-750.mktorest.com/rest/v1/leads/submitForm.json?grant_type=client_credentials&client_secret=HrHMiOk3PS00JunYcNFeVtiGXhowo1SD&client_id=ac72a824-83a5-4ea8-9f45-5ad52757bc90',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'POST',
+      CURLOPT_POSTFIELDS =>'{
+          "formId": 14149,
+          "input": [
+            {
+              "leadFormFields": {
+                  "firstName": "'.$first_name.'",
+                  "lastName": "'.$last_name.'",
+                  "email": "'.$email.'", 
+                  "mobilePhone": "'.$mobile.'",
+                  "company": "'.$company.'", 
+                  "title": "'.$jobtitle.'",
+                  "webformRequest": "'.$message.'",
+                  "bEUSOI": "'.$agree_status.'", 
+                  "uTMCampaign": "", 
+                  "uTMcontent": "",
+                  "uTMmedium": "",
+                  "uTMSource": "",
+                  "uTMterm": ""
+              },
+              "visitorData": {
+                  "pageURL": "https://dx360.konicaminolta.co.uk/",
+                  "queryString": "",
+                  "userAgentString": "",
+                  "leadClientIpAddress": "10.218.32.4"
+              },
+              "cookie": "" 
+            }
+          ]
+     }
+    ',
+      CURLOPT_HTTPHEADER => array(
+        'Authorization: Bearer '.get_bearer_token(),
+        'Content-Type: application/json',
+        'Cookie: Cookie_2=value'
+      ),
+    ));
+    
+    $response = curl_exec($curl); 
+    curl_close($curl);
+    
+}
+
+function get_bearer_token(){
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://697-gbv-750.mktorest.com/identity/oauth/token?grant_type=client_credentials&client_id=ac72a824-83a5-4ea8-9f45-5ad52757bc90&client_secret=HrHMiOk3PS00JunYcNFeVtiGXhowo1SD',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Cookie: Cookie_2=value'
+  ),
+));
+
+$response = curl_exec($curl);
+curl_close($curl);
+$access_token = json_decode($response);
+return $access_token->access_token;
+
+}

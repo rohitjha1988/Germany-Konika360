@@ -1,0 +1,422 @@
+
+<!-- start header -->
+		<link
+		rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- start header -->
+		<header>
+			<div
+				class="left-nav">
+
+				<!-- start logo -->
+				 <div class="col-lg-4 dx360d padding-10px-left innerresult">
+      <a href="{{ url('<front>') }}" title="Konica Minolta" class="">
+
+      <img src="https://dx360.konicaminolta.co.uk/themes/Assessment/images/dx360dgree.png"></a>
+      <a href="{{ url('<front>') }}" title="Konica Minolta" class="">
+
+      <img src="https://dx360.konicaminolta.co.uk/themes/Assessment/images/logo.svg"></a>
+
+</div>
+				<!-- end logo -->
+
+				<!-- end logo -->
+
+				<div class="bottom-menu-icon  right-menu-button text-extra-dark-gray nav-icon ">
+					<a href="javascript:void(0);" class=" opneside active" id="showRightPush">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</a>
+				</div>
+				<div class="sidenew">
+					<div class="sidendat">
+						<div class="sideHEad">
+							<h2>DX360° Assessment</h2>
+							<button class="btnclose">
+								<a href="javascript:void(0);" class="right-menu-button text-extra-dark-gray nav-icon active" id="showRightPush">
+									<span></span>
+									<span></span>
+									<span></span>
+									<span></span>
+								</a>
+							</button>
+
+						</div>
+						<div class="MidData">
+
+							<div class="Sidemenus">
+								<ul>
+									<li class="hasmenu">
+										<a href="{{ url('<front>') }}" class="defaultcolors">DX360° HomePage <i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+
+									</li>
+									<li>
+										<a href="https://dx360.konicaminolta.co.uk/productivity-and-collaboration" class="hasmenu produccolor">PRODUCTIVITY & COLLABORATION<i class="fa fa-angle-right"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/security-and-compliance" class="hasmenu sectcolor">SECURITY & COMPLIANCE<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/mobility" class="hasmenu mobilitycolor">MOBILITY<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/flexibility-efficiency-and-sustainability" class="hasmenu flexibilitycolor">FLEXIBILITY, EFFICIENCY &
+											<br>SUSTAINABILITY<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/analytics-and-intelligence" class="hasmenu analyticescolor">ANALYTICS & INTELLIGENCE<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+
+								</ul>
+							</div>
+							<div class="Sidemenus blubars secndcolrsec">
+         <ul>
+              <li><a href=" https://www.konicaminolta.co.uk" class="">konica minolta homepage <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/it-services">it services<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href=" https://www.konicaminolta.co.uk/en-gb/innovation">innovation<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/office-printing">office printing<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href=" https://www.konicaminolta.co.uk/en-gb/professional-printing">professional printing<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/customer-support/faqs">support & faqs<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              
+              
+            </ul>
+         </div>
+          </div>
+      
+          <div class="Socialbar">
+              
+              <div class="sobar">
+              
+              <h2>Follow Us :</h2>
+                  <ul>
+                  <li><a href="https://www.facebook.com/KonicaMinoltaBusinessSolutionsUKLtd/"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="https://www.linkedin.com/company/konica-minolta-business-solutions-uk-ltd/"><i class="fa fa-linkedin"></i></a></li>
+                  <li><a href="https://twitter.com/konicaminoltaGB"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="https://www.youtube.com/user/konicaminoltatv"><i class="fa fa-youtube-play"></i></a></li>
+                  <li><a href="https://www.instagram.com/Konica_minolta_uk/"><i class="fa fa-instagram"></i></a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      </div>
+				<div class="serchover"></div>
+			</div>
+
+		</header>
+		<!-- end header -->
+
+
+
+ <section class="pagesec">
+      <div class="container">
+          <h2>DX360° ASSESSMENT</h2>
+           <p>YOUR RESPONSES</p>
+          </div>
+      </section>
+
+<section class="questionsbox">
+<div class="container">
+    <h1 class="analreviewtit">Analytics & Intelligence</h1>
+<div id="flex">
+
+{% set id = 1 %}
+{% for key, value in ana_assess %}
+    
+{% if key == 'which_areas_of_your_business_do_you_struggle_with_' %}
+     <div class="ques-ans-box" id="onesp">
+<div class="flexques">Question One: Which major data challenges are impacting your business and operational performances?</div>
+<p>
+Your response is highlighted below <br/>  
+    
+     {% if 'Visibility of data' in value %}
+     <b class="analyticsecolors">1. Visibility of data</b> </br>
+     {% else %}
+        1. Visibility of data</br>
+     {% endif %}
+
+     {% if 'Controlling of operational performance' in value %}
+     <b class="analyticsecolors">2. Controlling of operational performance</b> </br>
+     {% else %}
+        2. Controlling of operational performance</br>
+     {% endif %}
+    
+     
+     {% if 'Key Performance Indicators (KPIs) monitoring due to manual reporting' in value %}
+     <b class="analyticsecolors">3. Key Performance Indicators (KPIs) monitoring due to manual reporting</b> </br>
+     {% else %}
+        3. Key Performance Indicators (KPIs) monitoring due to manual reporting</br>
+     {% endif %}
+     
+    
+     {% if 'Connecting data from siloed systems' in value %}
+     <b class="analyticsecolors">4. Connecting data from siloed systems</b> </br>
+     {% else %}
+        4. Connecting data from siloed systems</br>
+     {% endif %}
+    
+     {% if 'None of these' in value %}
+     <b class="analyticsecolors">5. None of these</b> </br>
+     {% else %}
+        5. None of these</br>
+     {% endif %}
+    
+</p>
+</div>
+{% endif %}
+
+{% if key == 'do_you_actively_monitor_your_sensitive_data_such_as_personal_or_' %}
+ <div class="ques-ans-box" id="twosp">
+<div class="flexques">Question Two: Do you actively monitor your sensitive data, such as personal or payment information, for compliance?</div>
+    Your response is highlighted below <br/>    
+    {% if 'Yes' in value %}
+    <b class="analyticsecolors">1. Yes</b> </br>
+    {% else %}
+      1. Yes</br>
+    {% endif %}
+    {% if 'No' in value %}
+    <b class="analyticsecolors">2. No</b> </br>
+    {% else %}
+      2. No</br>
+    {% endif %}
+    {% if "I don't know" in value %}
+    <b class="analyticsecolors">3. I don't know</b> </br>
+    {% else %}
+      3. I don't know</br>
+    {% endif %}       
+       </div>
+{% endif %}
+
+
+{% if key == 'do_you_actively_monitor_manage_key_applications_and_their_usage_' %}
+<div class="ques-ans-box" id="threesp">
+<div class="flexques">Question Three: Do you actively monitor & manage key applications and their usage?</div>
+      Your response is highlighted below <br/>    
+      {% if 'Yes' in value %}
+      <b class="analyticsecolors">1. Yes</b> </br>
+      {% else %}
+        1. Yes</br>
+      {% endif %}
+      {% if 'No' in value %}
+      <b class="analyticsecolors">2. No</b> </br>
+      {% else %}
+        2. No</br>
+      {% endif %}
+      {% if "I don't know" in value %}
+      <b class="analyticsecolors">3. I don't know</b> </br>
+      {% else %}
+        3. I don't know</br>
+      {% endif %}     
+</div>
+{% endif %}
+
+
+{% if key == 'do_you_proactively_monitor_manage_your_it_environment_and_any_co' %}
+<div class="ques-ans-box" id="foursp">
+<div class="flexques">Question Four: Do you proactively monitor & manage your IT environment and any connected device vulnerabilites and compliance risks?</div>
+        Your response is highlighted below <br/>    
+        {% if 'Yes' in value %}
+        <b class="analyticsecolors">1. Yes</b> </br>
+        {% else %}
+          1. Yes</br>
+        {% endif %}
+        {% if 'No' in value %}
+        <b class="analyticsecolors">2. No</b> </br>
+        {% else %}
+          2. No</br>
+        {% endif %}
+        {% if "I don't know" in value %}
+        <b class="analyticsecolors">3. I don't know</b> </br>
+        {% else %}
+          3. I don't know</br>
+        {% endif %}     
+</div>
+{% endif %}
+
+
+{% if key == 'what_precentage_of_your_physical_infrastructure_or_operations_ar' %}
+<div class="ques-ans-box" id="fivesp">
+<div class="flexques">Question Five: What percentage of your physical infrastructure or operations are you monitoring to manage risks?</div>
+     Answer:  <b class="analyticsecolors">{{ value }}%</b>
+</div>
+{% endif %}
+
+{% endfor %}
+
+
+</div>
+</div>
+</section>
+
+
+
+<section class="piesection">
+<div class="container">
+     
+    
+    <div class="col-12 col-lg-6 text-center wow fadeInLeft padtopsre" style="visibility: visible; animation-name: fadeInLeft;">
+        
+        <div class="mobirevcag commrevilastcss">
+        <span>Mobility:</span> Understand how to gain a competitive edge by
+being more responsive, accessible, and be able to work
+whenever, and wherever.
+        </div>
+         <div class="flexirevcag commrevilastcss">
+        <span>Flexibility, Efficiency & Sustainability:</span> Understand the
+flexibility of your operations and how to deliver new
+performances, efficiencies, and customer experiences.
+        </div>
+         <div class="analytrevcag commrevilastcss">
+        <span>Analytics & Intelligence:</span> Understand how to visualise
+trends and insights about your business and make better
+decisions and predictions faster to enable growth.
+
+        </div>
+         <div class="secicomprevcag commrevilastcss">
+        <span>Security & Compliance:</span> Understand how information
+management and the workforce should work in harmony
+to ensure data security and compliance and remove risks
+to your business.
+        </div>
+         <div class="produccalrevcag commrevilastcss">
+        <span>Productivity & Collaboration:</span> Understand and transform
+how your people and teams use technology to interact,
+communicate and collaborate with each other and with
+your customers - creating engaged and effective
+workforces.
+        </div>
+        
+        
+    </div>
+<div class="col-12 col-lg-6 text-center wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">
+    <h1 class="selctcaterev">Please select a category below to continue your journey or to start again.</h1>
+<div
+							class="component csstransforms">
+
+							<!-- Start Nav Structure -->
+
+							<div class="cn-wrapper opened-nav" id="cn-wrapper">
+								<ul class="fntosf">
+									
+									
+										<li>
+											<div class="flexd">
+												<h6>FLEXIBILITY, EFFICIENCY & SUSTAINABILITY</h6><br>
+												<a href="../../flexibility-efficiency-and-sustainability/flexibility-assessment">Start Now</a>
+											</div>
+										</li>
+							
+										<li id="analytlightcol">
+											<div class="flexd analyresults">
+												<h6>ANALYTICS & INTELLIGENCE</h6><br>
+												<a href="../../analytics-and-intelligence/assessment">Start Again</a>
+											</div>
+										</li>
+							
+									<li>
+											<div class="produrelf">
+												<h6>SECURITY & COMPLIANCE</h6><br>
+												<a href="../../security-and-compliance/assessment">Start Now</a>
+											</div>
+										</li>
+									
+										<li>
+											<div class="flexd securityrestls">
+                                                <h6>PRODUCTIVITY & COLLABORATION</h6><br>
+												<a href="../../productivity-and-collaboration/assessment">Start Now</a>
+												
+											</div>
+										</li>
+									
+								
+										<li>
+											<div class="mpbolityrelst">
+												<h6>MOBILITY</h6><br>
+												<a href="../../mobility/assessment">Start Now</a>
+											</div>
+										</li>
+							
+
+								</ul>
+							</div>
+							<!-- End of Nav Structure -->
+						</div>
+    
+</div>
+    
+    
+    
+    
+    </div>
+</section> 
+    
+		<!-- start footer -->
+<footer class="footer-standard-dark bg-dark-footer" id="footer">
+  <div class="footer-widget-area padding-20px-tb sm-padding-30px-tb padding-30px-btm">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 widget sm-text-center">
+
+          <!-- start social media -->
+          <div class="social-icon-style-8 d-inline-block vertical-align-middle">
+               <ul class="small-icon no-margin-bottom">
+              <li> <a class="facebook text-white-2" href="https://www.facebook.com/KonicaMinoltaBusinessSolutionsUKLtd/" target="_blank"><img src="../../themes/Assessment/images/fb-rethink.svg" alt="Facebook logo"></a> </li>
+              <li><a class="linkedin text-white-2" href="https://www.linkedin.com/company/konica-minolta-business-solutions-uk-ltd/" target="_blank"><img src="../../themes/Assessment/images/linkedin-rethink.svg" alt="Linkedin logo"></a></li>
+              <li><a class="twitter text-white-2" href="https://twitter.com/konicaminoltaGB" target="_blank"><img src="../../themes/Assessment/images/twitter-rethink.svg" alt="Twitter logo"></a></li>
+              <li><a class="youtube text-white-2" href="https://www.youtube.com/user/konicaminoltatv" target="_blank"><img src="../../themes/Assessment/images/youtube-rethink.svg" alt="Youtube logo"></a></li>
+            </ul>
+          </div>
+          <!-- end social media -->
+        </div>
+
+        <!-- start text image -->
+        <div class="col-lg-6 col-md-6 widget md-padding-15px-left text-md-right text-center padding-5px-top">
+          <img src="themes/Assessment/images/gsti_text.svg" alt="">
+        </div>
+        <!-- end text image -->
+      </div>
+    </div>
+  </div>
+  <div class="border-top border-color-medium-dark-gray margin-60px-lr padding-16px-top">
+
+    <div class="bg-dark-footer padding-20px-bottom text-center sm-padding-30px-tb">
+      <div class="container padding-0">
+        <div class="row">
+          <!-- start copyright -->
+          <div class="col-md-6 text-md-left text-small text-center text-medium-gray">
+          <a href="https://www.konicaminolta.co.uk/en-gb/terms-of-use" target="_blank" class="text-extra-light-gray footer-links">Term of Use</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="https://dx360.konicaminolta.co.uk/sites/default/files/DX360Assessment-PrivacyPolicy-Website-v1-0.pdf" target="_blank" class="text-extra-light-gray footer-links">Privacy Policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="https://dx360.konicaminolta.co.uk/sitemap" class="text-extra-light-gray footer-links">Sitemap</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="https://www.konicaminolta.co.uk/en-gb/imprint" target="_blank" class="text-extra-light-gray footer-links">Imprint</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="javascript:void(0);" class="text-extra-light-gray footer-links cookies">Cookie Settings</a></div>
+          <div class="col-md-6 text-md-right text-small text-center text-extra-light-gray sm-padding-30px-top"> &copy; 2021 Konica Minolta Business Solutions (UK) Limited.
+          </div>
+          <!-- end copyright -->
+        </div>
+      </div>
+    </div>
+</footer>
+<!-- end footer -->
+
+<script id="usercentrics-cmp" src="https://app.usercentrics.eu/browser-ui/latest/loader.js" data-settings-id="TYs1T85gv" async></script>
+<script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/modernizr.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/bootstrap.bundle.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.easing.1.3.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/skrollr.min.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/smooth-scroll.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.appear.js"></script><!-- menu navigation --><script type="text/javascript" src="../../themes/Assessment/js/classy/bootsnav.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.nav.js"></script><!-- animation --><script type="text/javascript" src="../../themes/Assessment/js/classy/wow.min.js"></script><!-- page scroll --><script type="text/javascript" src="../../themes/Assessment/js/classy/page-scroll.js"></script><!-- swiper carousel --><script type="text/javascript" src="../../../themes/Assessment/js/classy/swiper.min.js"></script><!-- counter --><script type="text/javascript" src="../../../themes/Assessment/js/classy/jquery.count-to.js"></script><!-- parallax --><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.stellar.js"></script><!-- magnific popup --><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.magnific-popup.min.js"></script><!-- portfolio with shorting tab --><script type="text/javascript" src="../../themes/Assessment/js/classy/isotope.pkgd.min.js"></script><!-- themes/Assessment/images loaded --><script type="text/javascript" src="../../themes/Assessment/js/classy/imagesloaded.pkgd.min.js"></script><!-- pull menu --><script type="text/javascript" src="../../themes/Assessment/js/classy/classie.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/hamburger-menu.js"></script><!-- counter  --><script type="text/javascript" src="../../themes/Assessment/js/classy/counter.js"></script><!-- fit video  --><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.fitvids.js"></script><!-- skill bars  --><script type="text/javascript" src="../../themes/Assessment/js/classy/skill.bars.jquery.js"></script><!-- justified gallery  --><script type="text/javascript" src="../../themes/Assessment/js/classy/justified-gallery.min.js"></script><!--pie chart--><script type="text/javascript" src="../../themes/Assessment/js/classy/jquery.easypiechart.min.js"></script><!-- retina --><script type="text/javascript" src="../../themes/Assessment/js/classy/retina.min.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/main.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/canvasjsnew.js"></script><script type="text/javascript" src="../../themes/Assessment/js/classy/canvasjs.min.js"></script><script>$(".hasmenu").click(function () {
+$(".hasmenu").removeClass("active")
+$(this).addClass("active");
+
+
+//          $(".submenus").slideUp()
+$(this).find(".Sidemenus").show();
+});
+$(".opneside").click(function () {
+$(".sidendat,.serchover").addClass("active");
+
+});
+$(".btnclose").click(function () {
+$(".sidendat,.serchover").removeClass("active");
+
+});</script>

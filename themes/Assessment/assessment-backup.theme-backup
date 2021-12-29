@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Bartik theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Implements hook_preprocess_HOOK() for HTML document templates.
+ *
+ * Adds body classes if certain regions have content.
+ 
+function assessment_preprocess_node(&$variables)
+{
+ $result = array();
+ $result =  explode("=",$_SERVER['QUERY_STRING']);
+ 
+ $variables['url_string'] = $result[1];
+
+
+}
+*/
+function assessment_preprocess_node(&$variables){
+
+unset($result1);
+     $result1 = [];
+      $result1 =  explode("&",$_SERVER['QUERY_STRING']); 
+
+  $result2 =  explode("=",$result1[0]);
+  $result3 =  explode("=",$result1[1]);
+  
+  $variables['final_score'] = $result2[1];
+  $variables['myname2'] = $result3[1];
+
+if( $result3[1] == 'productivity-collaborations' ){
+  $variables['final_score_prod'] = $result2[1];
+}elseif ($result3[1] == 'analytics-intelligence') {
+  $variables['final_score_ana'] = $result2[1];
+}elseif ($result3[1] == 'flexibility-efficiency') {
+  $variables['final_score_flex'] = $result2[1];
+}elseif ($result3[1] == 'security_and_compliance') {
+  $variables['final_score_sec'] = $result2[1];
+}elseif ($result3[1] == 'mobility') {
+  $variables['final_score_mob'] = $result2[1];
+}
+  
+}

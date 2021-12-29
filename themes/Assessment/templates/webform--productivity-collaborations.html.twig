@@ -1,0 +1,264 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a webform submission form.
+ *
+ * Available variables:
+ * - form: The webform submission form.
+ *
+ * @ingroup themeable
+ */
+
+#}
+<!doctype html>
+<html class="no-js" lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <body>
+        <!-- start header -->
+      <header>
+      <div
+        class="left-nav">
+
+        <!-- start logo -->
+        <div class="sidebar-part1 webformlogos text-right">
+             <div class="dx360d padding-10px-left innerresult">
+      <a href="{{ url('<front>') }}" title="Konica Minolta" class="">
+
+      <img src="/themes/Assessment/images/dx360dgree.png"></a>
+      <a href="{{ url('<front>') }}" title="Konica Minolta" class="">
+
+      <img src="/themes/Assessment/images/logo.svg"></a>
+
+</div>
+        </div>
+        <!-- end logo -->
+
+        <!-- end logo -->
+
+        <div class="bottom-menu-icon  right-menu-button text-extra-dark-gray nav-icon ">
+          <a href="javascript:void(0);" class=" opneside active" id="showRightPush">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
+        <div class="sidenew">
+          <div class="sidendat">
+            <div class="sideHEad">
+              <h2>DX360° Assessment</h2>
+              <button class="btnclose">
+                <a href="javascript:void(0);" class="right-menu-button text-extra-dark-gray nav-icon active" id="showRightPush">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </a>
+              </button>
+
+            </div>
+            <div class="MidData">
+
+              <div class="Sidemenus">
+                <ul>
+                  <li class="hasmenu">
+                    <a href="{{ url('<front>') }}" class="defaultcolors">DX360° HomePage<i class="fa fa-angle-right" aria-hidden="true"></i>
+
+                    </a>
+
+                  </li>
+                  <li>
+                    <a href="https://dx360.konicaminolta.co.uk/productivity-and-collaboration" class="hasmenu produccolor active">PRODUCTIVITY & COLLABORATION<i class="fa fa-angle-right"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/security-and-compliance" class="hasmenu sectcolor">SECURITY & COMPLIANCE<i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/mobility" class="hasmenu mobilitycolor">MOBILITY<i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/flexibility-efficiency-and-sustainability" class="hasmenu flexibilitycolor ">FLEXIBILITY, EFFICIENCY &
+                      <br>SUSTAINABILITY<i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/analytics-and-intelligence" class="hasmenu analyticescolor">ANALYTICS & INTELLIGENCE<i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+                  </li>
+
+                </ul>
+              </div>
+              <div class="Sidemenus blubars secndcolrsec">
+       <ul>
+             <li><a href=" https://www.konicaminolta.co.uk" class="">konica minolta homepage <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/it-services">it services<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href=" https://www.konicaminolta.co.uk/en-gb/innovation">innovation<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/office-printing">office printing<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href=" https://www.konicaminolta.co.uk/en-gb/professional-printing">professional printing<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.konicaminolta.co.uk/en-gb/customer-support/faqs">support & faqs<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              
+              
+            </ul>
+         </div>
+          </div>
+      
+          <div class="Socialbar">
+              
+              <div class="sobar">
+              
+              <h2>Follow Us :</h2>
+               <ul>
+                  <li><a href="https://www.facebook.com/KonicaMinoltaBusinessSolutionsUKLtd/"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="https://www.linkedin.com/company/konica-minolta-business-solutions-uk-ltd/"><i class="fa fa-linkedin"></i></a></li>
+                  <li><a href="https://twitter.com/konicaminoltaGB"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="https://www.youtube.com/user/konicaminoltatv"><i class="fa fa-youtube-play"></i></a></li>
+                  <li><a href="https://www.instagram.com/Konica_minolta_uk/"><i class="fa fa-instagram"></i></a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      </div>
+        <div class="serchover"></div>
+      </div>
+
+    </header>
+        <!-- end header -->
+      <div class="col-12 col-lg-6 height-600px bg-yellow padding-three-all">
+      <div>
+      <h1 class="title page-title text-white text-uppercase text-extra-large text-left padding-70px-tb sm-padding-two-all width-100 text-lg-left text-center">Productivity and Collaboration</h1>
+        <form{{ attributes }}>
+
+
+          {{ element.elements.first }}
+          {{ element.elements.from_0_to_100_do_you_have_a_seamless_work_experience_where_you_c }}
+
+          {{ element.elements.second }}
+          {{ element.elements.what_percentage_of_your_workforce_when_working_remotely_have_acc }}
+
+          {{ element.elements.third }}
+          {{ element.elements.when_your_workforce_is_working_remotely_is_their_it_still_manage }}
+
+          {{ element.elements.fourth }}
+          {{ element.elements.how_do_you_manage_document_work_and_other_manual_work_in_your_da }}
+          {{ element.elements.what_percent_of_your_time_is_wasted_due_to_your_or_someones_else }}
+          {{ element.elements.fifth }}
+          {{ element.elements.to_what_extend_supports_your_servicedesk_your_customer_s_needs_ }}
+
+          {{ element.elements.message }}
+          {{ element.form_build_id }}
+          {{ element.form_token }}
+          {{ element.form_id }}
+          {{ element.actions }}
+
+          {{ title_suffix }}
+
+
+      </div>
+			</div>
+
+      <div class="cnt-right col-12 col-lg-6 height-600px cnt-p prod-section">
+			 <form{{ attributes }}>
+
+         {{ element.elements.first }}
+            {{ element.elements.from_0_to_100_do_you_have_a_seamless_work_experience_where_you_c }}
+
+            {{ element.elements.second }}
+            {{ element.elements.what_percentage_of_your_workforce_when_working_remotely_have_acc }}
+
+          {{ element.elements.third }}
+            {{ element.elements.when_your_workforce_is_working_remotely_is_their_it_still_manage }}
+
+			{{ element.elements.fourth }}
+            {{ element.elements.how_do_you_manage_document_work_and_other_manual_work_in_your_da }}
+{{ element.elements.what_percent_of_your_time_is_wasted_due_to_your_or_someones_else }}
+			{{ element.elements.fifth }}
+            {{ element.elements.to_what_extend_supports_your_servicedesk_your_customer_s_needs_ }}
+
+            {{ element.elements.message }}
+            {{ element.form_build_id }}
+            {{ element.form_token }}
+            {{ element.form_id }}
+            {{ element.actions }}
+
+        {{ title_suffix }}
+            {{ element.progress }}  
+        </div>
+
+          
+{#        <!-- start footer -->
+{#        <footer class="footer-standard-dark bg-dark-footer">#}
+{#            <div class="footer-widget-area padding-two-tb sm-padding-30px-tb">#}
+{#                <div class="container">#}
+{#                    <div class="row">#}
+{#                        <div class="col-lg-6 col-md-6 widget sm-text-center">#}
+
+{#                            <!-- start social media -->#}
+{#                            <div class="social-icon-style-8 d-inline-block vertical-align-middle">#}
+{#                                <ul class="small-icon no-margin-bottom">#}
+{#                                    <li><a class="facebook text-white-2" href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>#}
+{#                                    <li><a class="linkedin text-white-2" href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a></li>#}
+{#                                    <li><a class="twitter text-white-2" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a></li>#}
+{#                                    <li><a class="youtube text-white-2" href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a></li>#}
+{#                                    <li><a class="instagram text-white-2" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram no-margin-right" aria-hidden="true"></i></a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <!-- end social media -->#}
+{#                        </div>#}
+
+{#                        <!-- start text image -->#}
+{#                        <div class="col-lg-6 col-md-6 widget md-padding-15px-left text-md-right text-center padding-5px-top">#}
+{#                            <img src="themes/Assessment/images/gsti_text.png" alt="">#}
+{#                        </div>#}
+{#                        <!-- end text image -->#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="border-top border-color-medium-dark-gray">#}
+
+{#            <div class="bg-dark-footer padding-20px-bottom padding-10px-top text-center sm-padding-30px-tb">#}
+{#                <div class="container">#}
+{#                    <div class="row">#}
+{#                        <!-- start copyright -->#}
+{#                        <div class="col-md-6 text-md-left text-small text-center"><a href="javascript:void(0);" class="text-dark-gray">Term of Use</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" class="text-dark-gray">Privacy Policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" class="text-dark-gray">Sitemap</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" class="text-dark-gray">Imprint</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" class="text-dark-gray">Cookie Settings</a></div>#}
+{#                        <div class="col-md-6 text-md-right text-small text-center sm-padding-30px-top"> &copy; 2021 Konica Minolta Business Solutions India Private Limited.#}
+{#                        </div>#}
+{#                        <!-- end copyright -->#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </footer>#}
+{#        <!-- end footer -->#}
+
+        <!-- scroll to top -->
+        <a class="scroll-top-arrow" href="javascript:void(0);"><i class="ti-arrow-up"></i></a>
+        <!-- end scroll to top  -->
+        <!-- javascript libraries -->
+   <script src="../core/assets/vendor/jquery/jquery.min.js?v=3.5.1"></script>
+    <script>
+      
+      $(".hasmenu").click(function(){
+          $(".hasmenu").removeClass("active")
+          $(this).addClass("active");
+          
+          
+//          $(".submenus").slideUp()
+          $(this).find(".Sidemenus").show();
+      });
+           $(".opneside").click(function(){
+          $(".sidendat,.serchover").addClass("active");
+          
+      });
+          $(".btnclose").click(function(){
+          $(".sidendat,.serchover").removeClass("active");
+          
+      }); 
+         
+          
+      </script>
+       
+
+    </body>
+</html>

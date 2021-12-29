@@ -1,0 +1,1861 @@
+{#
+/**
+ * @file
+ * Bartik's theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available. For example:
+ *   - node.getCreatedTime() will return the node creation timestamp.
+ *   - node.hasField('field_example') returns TRUE if the node bundle includes
+ *     field_example. (This does not indicate the presence of a value in this
+ *     field.)
+ *   - node.isPublished() will return whether the node is published or not.
+ *   Calling other methods, such as node.delete(), will result in an exception.
+ *   See \Drupal\node\Entity\Node for a full list of public properties and
+ *   methods for the node object.
+ * - label: (optional) The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author user entity, rendered using the "compact"
+ *   view mode.
+ * - metadata: Metadata for this node.
+ * - date: (optional) Themed creation date field.
+ * - author_name: (optional) Themed author name field.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser", and
+ *     full: "node--view-mode-full".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     teaser listings.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content tag that appears in the template.
+ * - author_attributes: Same as attributes, except applied to the author of
+ *   the node tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+{{ attach_library('bartik/classy.node') }}
+<article{{attributes.addClass(classes)}}>
+	<div{{content_attributes.addClass('node__content','clearfix')}}>
+
+
+		<link
+		rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- start header here -->
+		<header class="sticky header-appear">
+			<div
+				class="left-nav">
+
+				<!-- start logo -->
+
+				<div class="sidebar-part1 md-padding-10px-top md-padding-70px-left sm-padding-10px-top sm-padding-80px-left reultlogoa">
+					<div class="col-lg-4 dx360d padding-10px-left">
+						<a href="{{ url('<front>') }}" title="Konica Minolta" class="">
+
+							<img src="/themes/Assessment/images/dx360dgree.png"></a>
+						<a href="{{ url('<front>') }}" title="Konica Minolta" class="">
+
+							<img src="/themes/Assessment/images/logo.svg"></a>
+
+					</div>
+
+					<div class="right-top-menu col-lg-8 text-right" style="padding: 1.5% 0% 1.5% 3%;">
+						<a href="#analytics" title="Analytics & Intelligence section" class="blueconnect alt-font col-lg-2 font-weight-700 logo  js-anchor-link text-center">ANALYTICS</a>
+						<a href="#mobility" title="Mobility section" class="pinkconnect alt-font col-lg-2 font-weight-700 logo text-center  js-anchor-link">MOBILITY</a>
+						<a href="#productivity" title="Productivity & Collaboration section" class="yelwconnect alt-font col-lg-2 font-weight-700 logo   js-anchor-link">PRODUCTIVITY</a>
+						<a href="#security" title="Security & Compliance section" class="grnconnect alt-font col-lg-2 font-weight-700 logo   js-anchor-link">SECURITY</a>
+						<a href="#flexibility" title="Flexibility, Efficiency & Sustainability section" class="brinajconnect alt-font col-lg-2 font-weight-700 logo  js-anchor-link">FLEXIBILITY</a>
+					</div>
+				</div>
+
+
+				<!-- end logo -->
+
+
+				<div class="bottom-menu-icon  right-menu-button text-extra-dark-gray nav-icon ">
+					<a href="javascript:void(0);" class=" opneside active" id="showRightPush">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</a>
+				</div>
+				<div class="sidenew">
+					<div class="sidendat">
+						<div class="sideHEad">
+							<h2>DX360° Assessment</h2>
+							<button class="btnclose">
+								<a href="javascript:void(0);" class="right-menu-button text-extra-dark-gray nav-icon active" id="showRightPush">
+									<span></span>
+									<span></span>
+									<span></span>
+									<span></span>
+								</a>
+							</button>
+
+						</div>
+						<div class="MidData">
+
+							<div class="Sidemenus">
+								<ul>
+									<li class="hasmenu">
+										<a href="{{base_url}}" class="defaultcolors">DX360° HomePage
+											<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+
+									</li>
+									<li>
+										<a href="https://dx360.konicaminolta.co.uk/productivity-and-collaboration" class="hasmenu produccolor">PRODUCTIVITY &amp; COLLABORATION<i class="fa fa-angle-right"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/security-and-compliance" class="hasmenu sectcolor">SECURITY &amp; COMPLIANCE<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/mobility" class="hasmenu mobilitycolor">MOBILITY<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/flexibility-efficiency-and-sustainability" class="hasmenu flexibilitycolor">FLEXIBILITY, EFFICIENCY &amp;
+											<br>SUSTAINABILITY<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{base_url}}/analytics-and-intelligence" class="hasmenu analyticescolor">ANALYTICS & INTELLIGENCE<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+									</li>
+
+								</ul>
+							</div>
+							<div class="Sidemenus blubars secndcolrsec">
+								<ul>
+									<li><a href=" https://www.konicaminolta.co.uk" class="">konica minolta homepage<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+									<li><a href="https://www.konicaminolta.co.uk/en-gb/it-services">it services<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+									<li><a href=" https://www.konicaminolta.co.uk/en-gb/innovation">innovation<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+									<li><a href="https://www.konicaminolta.co.uk/en-gb/office-printing">office printing<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+									<li><a href=" https://www.konicaminolta.co.uk/en-gb/professional-printing">professional printing<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+									<li><a href="https://www.konicaminolta.co.uk/en-gb/customer-support/faqs">support & faqs<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+
+
+								</ul>
+							</div>
+						</div>
+
+						<div class="Socialbar">
+
+							<div class="sobar">
+
+								<h2>Follow Us :</h2>
+								<ul>
+									<li><a href="https://www.facebook.com/KonicaMinoltaBusinessSolutionsUKLtd/"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="https://www.linkedin.com/company/konica-minolta-business-solutions-uk-ltd/"><i class="fa fa-linkedin"></i></a></li>
+									<li><a href="https://twitter.com/konicaminoltaGB"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="https://www.youtube.com/user/konicaminoltatv"><i class="fa fa-youtube-play"></i></a></li>
+									<li><a href="https://www.instagram.com/Konica_minolta_uk/"><i class="fa fa-instagram"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="serchover"></div>
+
+			</div>
+
+		</header>
+
+		<!-- end header  -->
+
+		<section class="wow fadeIn bannersres" style="visibility: visible; animation-name: fadeIn;">
+			<div class="container">
+				<h1>DX360°  Assessment</h1>
+				<p>YOUR TAILORED DIGITAL MATURITY ASSESSMENT & PLAN</p>
+			</div>
+		</section>
+
+		<!-- content part start -->
+		<section class="wow fadeIn contentmeassge" style="visibility: visible; animation-name: fadeIn;">
+			<div class="container">
+				<h1>Hello,[node:title] - [site:name]
+					{{name}},</h1>
+				<p>Thank you for completing the Konica Minolta DX360° Assessment.
+				</p>
+
+				<p>Here is your personalised digital maturity and transformation report to help you understand your existing state and plan your digital future.</p>
+
+				<p>Organisations like yours embrace digital transformation to reach their true potential and gain competitive advantage through new customer experiences, enhanced process efficiencies, improved business decision making as well as faster agility and innovation.</p>
+
+				<p>Konica Minolta specialise in helping organisations of all sizes to accelerate their digital transformation and realise the possibilities of an Intelligent Connected Workplace. If you would like a digital transformation (DX) expert to explain the findings and recommendations, book in an online meeting <a href="https://dx360.konicaminolta.co.uk/#book-appointment" target="_blank">here.</a></p>
+
+			</div>
+		</section>
+		<!-- content part end -->
+
+
+		<!-- graph part start -->
+		<section class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+
+			<div class="containers">
+				<div class="contntbgblue col-lg-6">
+					<p>Your digital maturity score is
+						<strong>{{final_digital_score_new|number_format(2, '.', '.')}}%</strong>, showing you are well on your way towards a transformed digital organisation.</p>
+
+					<p>Simply click on any of the 5 digital maturity assessment areas below to see your respective digital maturity results and recommendations.</p>
+
+
+				</div>
+
+				<div class="bgblue col-lg-6">
+					<div class="imgbgs">
+						<img src="themes/Assessment/images/first.png">
+						<div class="maingrphresu topgreycol">
+							<span>YOUR OVERALL SCORE</span>
+							{% if final_digital_score_new <= 25 %}
+								<h4>
+									<b>{{final_digital_score_new|number_format(2, '.', '.')}}%</b>
+								</h4>
+								<span>Maturity Level 0</span>
+							{% endif %}
+							{% if ( final_digital_score_new > 25)  and (final_digital_score_new <= 50) %}
+								<h4>
+									<b>{{final_digital_score_new|number_format(2, '.', '.')}}%</b>
+								</h4>
+								<span>Maturity Level 1</span>
+							{% endif %}
+							{% if ( final_digital_score_new > 50) and (final_digital_score_new <= 75) %}
+								<h4>
+									<b>{{final_digital_score_new|number_format(2, '.', '.')}}%</b>
+								</h4>
+								<span>Maturity Level 2</span>
+							{% endif %}
+							{% if ( final_digital_score_new > 75) %}
+								<h4>
+									<b>{{final_digital_score_new|number_format(2, '.', '.')}}%</b>
+								</h4>
+								<span>Maturity Level 3</span>
+							{% endif %}
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+		<!-- graph part end -->
+
+		<!-- box part start -->
+		<section class="bolist wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+			<div class="container">
+				<div class="row">
+					<div class="box-col">
+                        <a href="#analytics" >
+						<div class="BoxMail1 Mc1">
+							<h5>Analytics & Intelligence</h5>
+							<div class="imgsec "><img src="themes/Assessment/images/d.png"></div>
+							<h6>
+								{% if final_score_ana_new <= 0 %}
+									<span>{{final_score_ana_new|number_format(2, '.', '.')}}%</span>
+									TO BE COMPLETED
+								{% endif %}
+								{% if ( final_score_ana_new > 0)  and (final_score_ana_new <= 25) %}
+									<span>{{final_score_ana_new|number_format(2, '.', '.')}}%</span>
+									EMERGING
+								{% endif %}
+								{% if ( final_score_ana_new > 25)  and (final_score_ana_new <= 50) %}
+									<span>{{final_score_ana_new|number_format(2, '.', '.')}}%</span>
+									DIGITALISED
+								{% endif %}
+								{% if ( final_score_ana_new > 50) and (final_score_ana_new <= 75) %}
+									<span>{{final_score_ana_new|number_format(2, '.', '.')}}%</span>
+									INTEGRATED
+								{% endif %}
+								{% if ( final_score_ana_new > 75) %}
+									<span>{{final_score_ana_new|number_format(2, '.', '.')}}%</span>
+									TRANSFORMED
+								{% endif %}
+							</h6>
+						</div>
+            </a>
+					</div>
+					<div class="box-col">
+                            <a href="#mobility" >
+						<div class="BoxMail1 Mc2">
+							<h5>Mobility</h5>
+							<div class="imgsec"><img src="themes/Assessment/images/d2.png"></div>
+							<h6>
+
+								{% if final_score_mob_new <= 0 %}
+									<span>{{final_score_mob_new|number_format(2, '.', '.')}}%</span>
+									TO BE COMPLETED
+								{% endif %}
+								{% if ( final_score_mob_new > 0)  and (final_score_mob_new <= 25) %}
+									<span>{{final_score_mob_new|number_format(2, '.', '.')}}%</span>
+									EMERGING
+								{% endif %}
+								{% if ( final_score_mob_new > 25)  and (final_score_mob_new <= 50) %}
+									<span>{{final_score_mob_new|number_format(2, '.', '.')}}%</span>
+									DIGITALISED
+								{% endif %}
+								{% if ( final_score_mob_new > 50) and (final_score_mob_new <= 75) %}
+									<span>{{final_score_mob_new|number_format(2, '.', '.')}}%</span>
+									INTEGRATED
+								{% endif %}
+								{% if ( final_score_mob_new > 75) %}
+									<span>{{final_score_mob_new|number_format(2, '.', '.')}}%</span>
+									TRANSFORMED
+								{% endif %}
+							</h6>
+						</div>
+</a>
+					</div>
+					<div class="box-col">
+                         <a href="#productivity" >
+						<div class="BoxMail1 Mc3">
+							<h5>Productivity &<br>
+								Collaboration</h5>
+							<div class="imgsec"><img src="themes/Assessment/images/d3.png"></div>
+							<h6>
+
+								{% if final_score_prod_new <= 0 %}
+									<span>{{final_score_prod_new|number_format(2, '.', '.')}}%</span>
+									TO BE COMPLETED
+								{% endif %}
+								{% if ( final_score_prod_new > 0)  and (final_score_prod_new <= 25) %}
+									<span>{{final_score_prod_new|number_format(2, '.', '.')}}%</span>
+									EMERGING
+								{% endif %}
+								{% if ( final_score_prod_new > 25)  and (final_score_prod_new <= 50) %}
+									<span>{{final_score_prod_new|number_format(2, '.', '.')}}%</span>
+									DIGITALISED
+								{% endif %}
+								{% if ( final_score_prod_new > 50) and (final_score_prod_new <= 75) %}
+									<span>{{final_score_prod_new|number_format(2, '.', '.')}}%</span>
+									INTEGRATED
+								{% endif %}
+								{% if ( final_score_prod_new > 75) %}
+									<span>{{final_score_prod_new|number_format(2, '.', '.')}}%</span>
+									TRANSFORMED
+								{% endif %}
+							</h6>
+						</div>
+</a>
+					</div>
+					<div class="box-col">
+                        <a href="#security" >
+						<div class="BoxMail1 Mc4">
+							<h5>Security & Compliance</h5>
+							<div class="imgsec"><img src="themes/Assessment/images/d4.png"></div>
+							<h6>
+
+								{% if final_score_sec_new <= 0 %}
+									<span>{{final_score_sec_new|number_format(2, '.', '.')}}%</span>
+									TO BE COMPLETED
+								{% endif %}
+								{% if ( final_score_sec_new > 0)  and (final_score_sec_new <= 25) %}
+									<span>{{final_score_sec_new|number_format(2, '.', '.')}}%</span>
+									EMERGING
+								{% endif %}
+								{% if ( final_score_sec_new > 25)  and (final_score_sec_new <= 50) %}
+									<span>{{final_score_sec_new|number_format(2, '.', '.')}}%</span>
+									DIGITALISED
+								{% endif %}
+								{% if ( final_score_sec_new > 50) and (final_score_sec_new <= 75) %}
+									<span>{{final_score_sec_new|number_format(2, '.', '.')}}%</span>
+									INTEGRATED
+								{% endif %}
+								{% if ( final_score_sec_new > 75) %}
+									<span>{{final_score_sec_new|number_format(2, '.', '.')}}%</span>
+									TRANSFORMED
+								{% endif %}
+							</h6>
+						</div>
+</a>
+					</div>
+					<div class="box-col">
+                               <a href="#flexibility" >
+						<div class="BoxMail1 Mc5">
+							<h5>Flexibility, Efficiency &
+																																																																																																								                Sustainability</h5>
+							<div class="imgsec"><img src="themes/Assessment/images/d5.png"></div>
+							<h6>
+
+								{% if final_score_flex_new <= 0 %}
+									<span>{{final_score_flex_new|number_format(2, '.', '.')}}%</span>
+									TO BE COMPLETED
+								{% endif %}
+								{% if ( final_score_flex_new > 0)  and (final_score_flex_new <= 25) %}
+									<span>{{final_score_flex_new|number_format(2, '.', '.')}}%</span>
+									EMERGING
+								{% endif %}
+								{% if ( final_score_flex_new > 25)  and (final_score_flex_new <= 50) %}
+									<span>{{final_score_flex_new|number_format(2, '.', '.')}}%</span>
+									DIGITALISED
+								{% endif %}
+								{% if ( final_score_flex_new > 50) and (final_score_flex_new <= 75) %}
+									<span>{{final_score_flex_new|number_format(2, '.', '.')}}%</span>
+									INTEGRATED
+								{% endif %}
+								{% if ( final_score_flex_new > 75) %}
+									<span>{{final_score_flex_new|number_format(2, '.', '.')}}%</span>
+									TRANSFORMED
+								{% endif %}
+							</h6>
+						</div>
+</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- box part end -->
+
+		<!-- tabel part start -->
+		<section class="wow fadeIn no-padding margin-30px-tb sm-margin-70px-top" style="visibility: visible; animation-name: fadeIn;">
+
+			<div class="container">
+				<h2 class="tablehdings">THE INTELLIGENT CONNECTED WORKPLACE MAPPED OUT</h2>
+
+				<div class="contntbgblueright col-lg-12">
+					<!--p>Your digital maturity score is <strong>{{final_digital_score_new|number_format(2, '.', '.')}}%,</strong> showing you are well on your way towards a transformed digital organisation.</p-->
+
+					<p>
+						
+                    This personalised report details how you can accelerate with your digital maturity, with Konica Minolta working by your side.</p>
+
+ 
+
+<p>Digital transformation supports the reinvention of how to do business, with the help of technology as a facilitator to achieve it. Whilst the transformation is based on disruptive technology and applications, it also focuses on creating value for people, optimisation of business, and the ability to adapt quickly with the ideal tools to make it easy.</p>
+
+ 
+
+<p>Many businesses need support from an expert workplace transformation partner to achieve digital transformation. By focusing our capabilities on building solutions around customers’ needs in areas of IT, work, and your people, Konica Minolta help them transforms to the next level of maturity - towards an Intelligent Connected Workplace.
+                    </p>
+
+
+				</div>
+			<div class="trespon">
+					<table>
+						<thead>
+							<tr class="lasttbe" style="
+    background: #e5e3df;
+">
+
+								<td class="hide"></td>
+								<td rowspan="2">
+									<span class="txt-l defaultblack">Digital Maturity<br>
+ level  
+
+</span>
+								</td>
+								<td>
+									<span class="txt-l grnconnect">EMERGING</span>
+								</td>
+								<td>
+									<span class="txt-l blueconnect">DIGITALISED</span>
+								</td>
+								<td>
+									<span class="txt-l pinkconnect">INTEGRATED</span>
+								</td>
+								<td>
+									<span class="txt-l brinajconnect">TRANSFORMED</span>
+								</td>
+								<td>
+									<span class="txt-l defaultblack">CONGRATULATIONS!</span>
+								</td>
+								<td class="hide"></td>
+							</tr>
+
+<tr style="
+">
+								<td class="hide"></td>
+								
+								<td class="grnconnect" style="
+    text-align: center;
+    background: #e5e3df;
+">Level 0<br>
+Planning &amp; starting your digital transformation journey
+
+</td>
+								<td class=" blueconnect" style="
+    text-align: center;
+    background: #e5e3df;
+">Level 1
+									<br>Transforming tasks,  processes, operations &amp; IT for new performances &amp; customer experiences 
+</td>
+								<td class="pinkconnect" style="
+    text-align: center;
+    background: #e5e3df;
+">Level 2
+									<br>Empowered, engaged &amp; effective workforces &amp; operations irrespective of location</td>
+								<td class="brinajconnect" style="
+    text-align: center;
+    background: #e5e3df;
+">Level 3
+									<br>Agile, integrated and data-driven decisions, creativity and innovation
+</td>
+								<td class="defaultblack" style="
+    text-align: center;
+    background: #e5e3df;
+">Intelligent Connected Workplace! <br>
+You’ve reached your digital potential connecting IT, work &amp; people
+
+</td>
+								<th class="hide"></th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr class="contit">
+								<td class="lefthedse" rowspan="3" width="412">
+									<span class="verti blueconnect">Connect
+										<br>IT</span>
+								</td>
+								<td>
+									<span class="txt-l blueconnect">Digital workflow solutions</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+								<td class="lefthedse" rowspan="9">
+									<span class="verti vertirgt">Intelligent Connected Workplace</span>
+								</td>
+							</tr>
+							<tr class="contitwork">
+
+								<td>
+									<span class="txt-l blueconnect">Business process automation</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/darklight.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/darklight.jpg"></span>
+								</td>
+
+							</tr>
+							<tr class="contitpepol">
+
+								<td>
+									<span class="txt-l blueconnect">Managed IT infrastructure</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+
+							</tr>
+							<tr class="contit">
+								<td class="lefthedse" rowspan="3">
+									<span class="verti pinkconnect">Connect<br>
+										Work</span>
+								</td>
+								<td>
+									<span class="txt-l pinkconnect">Cloud / mobile IT solutions</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/darklight.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/darklight.jpg"></span>
+								</td>
+
+							</tr>
+							<tr>
+
+								<td>
+									<span class="txt-l pinkconnect">Collaboration solution</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span><img src="themes/Assessment/images/lighttick.jpg"></td>
+
+							</tr>
+							<tr>
+
+								<td>
+									<span class="txt-l pinkconnect">IT security</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/darklight.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/darklight.jpg"></span>
+								</td>
+
+							</tr>
+							<tr>
+								<td class="lefthedse" rowspan="3">
+									<span class="verti brinajconnect">Connect
+										<br>People</span>
+								</td>
+								<td>
+									<span class="txt-l brinajconnect">Acquire, analyse and utilise data</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+
+							</tr>
+							<tr>
+
+								<td>
+									<span class="txt-l brinajconnect">Decision making support</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/darklight.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/darklight.jpg"></span>
+								</td>
+
+							</tr>
+							<tr>
+
+								<td>
+									<span class="txt-l brinajconnect">Creating new monetising schemes</span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+								<td>
+									<span class="txt-l"><img src="themes/Assessment/images/lighttick.jpg"></span>
+								</td>
+
+							</tr>
+
+
+<tr style="
+    border: 0px;
+">
+								<th class="hide"></th>
+								<th class="" style="
+    background: #fff;
+"></th>
+								<th class="" colspan="5" style="padding: 0;background: #fff;">
+									<h1 class="arrows">ANALYTICS &amp; INTELLIGENCE 
+
+</h1>
+								</th>
+
+								<th class="hide"></th>
+							</tr>
+<tr style="
+    border: 0px;
+">
+								<th class="hide"></th>
+								<th class="" style="
+    background: #fff;
+"></th>
+								<th class="" colspan="5" style="padding: 0;background: #fff;">
+									<h1 class="arrows mobcoltable">MOBILITY
+</h1>
+								</th>
+
+								<th class="hide"></th>
+							</tr>
+<tr style="
+    border: 0px;
+">
+								<th class="hide"></th>
+								<th class="" style="
+    background: #fff;
+"></th>
+								<th class="" colspan="5" style="padding: 0;background: #fff;">
+									<h1 class="arrows productabelcolr">PRODUCTIVITY &amp; COLLABORATION
+
+</h1>
+								</th>
+
+								<th class="hide"></th>
+							</tr>
+<tr style="
+    border: 0px;
+">
+								<th class="hide"></th>
+								<th class="" style="
+    background: #fff;
+"></th>
+								<th class="" colspan="5" style="padding: 0;background: #fff;">
+									<h1 class="arrows securtytablecol">SECURITY &amp; COMPLIANCE
+
+</h1>
+								</th>
+
+								<th class="hide"></th>
+							</tr><tr style="
+    border: 0px;
+">
+								<th class="hide"></th>
+								<th class="" style="
+    background: #fff;
+"></th>
+								<th class="" colspan="5" style="padding: 0;background: #fff;">
+									<h1 class="arrows flexitabelcol">FLEXIBLITY, EFFICIENCY &amp; SUSTAINABILITY  
+
+</h1>
+								</th>
+
+								<th class="hide"></th>
+							</tr>
+
+							
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</section>
+
+
+
+		<div id="analytics"></div>
+		<!-- analystic part end -->
+		<section class="wow fadeIn no-padding margin-30px-tb sm-margin-70px-top analydivs" style="visibility: visible; animation-name: fadeIn;">
+			<h2>ANALYTICS & INTELLIGENCE</h2>
+			<div class="container">
+				<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+					<div class="imgbgs">
+						<img src="themes/Assessment/images/anascoregraph.jpg">
+						<div class="imgcont maingrphresu">
+							<span>OVERALL SCORE</span>
+							{% if final_score_ana_new <= 0 %}
+								<h4>
+									<b>{{final_score_ana_new|number_format(2, '.', '.')}}%</b>
+								</h4>
+								<span>To be completed</span>
+							</br>
+							<span>
+								<a href="{{base_url}}/analytics-and-intelligence/assessment" target="_blank">Click here</a>
+								to complete</span>
+						{% endif %}
+						{% if ( final_score_ana_new > 0 )  and ( final_score_ana_new <= 25) %}
+							<h4>
+								<b>{{final_score_ana_new|number_format(2, '.', '.')}}%</b>
+							</h4>
+							<span>Maturity Level 0</span>
+						{% endif %}
+						{% if ( final_score_ana_new > 25)  and (final_score_ana_new <= 50) %}
+							<h4>
+								<b>{{final_score_ana_new|number_format(2, '.', '.')}}%</b>
+							</h4>
+							<span>Maturity Level 1</span>
+						{% endif %}
+						{% if ( final_score_ana_new > 50) and (final_score_ana_new <= 75) %}
+							<h4>
+								<b>{{final_score_ana_new|number_format(2, '.', '.')}}%</b>
+							</h4>
+							<span>Maturity Level 2</span>
+						{% endif %}
+						{% if ( final_score_ana_new > 75) %}
+							<h4>
+								<b>{{final_score_ana_new|number_format(2, '.', '.')}}%</b>
+							</h4>
+							<span>Maturity Level 3</span>
+						{% endif %}
+
+
+					</div>
+				</div>
+				<div class="leftritanalyts">
+					<h3>A TAILORED PLAN FOR YOUR BUSINESS</h3>
+					{% if final_score_ana_new <= 0 %}
+						<p>You have not completed the section Analytics and Intelligence. Nevertheless, we would like to give you some food for thoughts and encourage you to complete this section to get a more tailored plan. Please find here some recommendations for this section: </p>
+					{% endif %}
+					{% if ( final_score_ana_new > 0 )  and ( final_score_ana_new <= 25) %}
+						<p>In the area of Analytics and Intelligence, your digital maturity score is showing that you are at a Level 0 – EMERGING stage of digital maturity. To not lose track and reduce risks of low maturity, the right time is to start your digital transformation right now by considering the following: </p>
+					{% endif %}
+					{% if ( final_score_ana_new > 25)  and (final_score_ana_new <= 50) %}
+						<p>In the area of Analytics and Intelligence, your digital maturity score is showing that you are at a Level 1 – DIGITALISED stage of digital maturity, which means you started your digital transformation journey already. To continue and accelerate this, we see benefit in starting with the following topics: </p>
+					{% endif %}
+					{% if ( final_score_ana_new > 50) and (final_score_ana_new <= 75) %}
+						<p>In the area of Analytics and Intelligence, your digital maturity score is showing that you are at a Level 2 – INTEGRATED stage of digital maturity, and well under way to reach optimum maturity. Based on your responses in the DX360° Assessment it is recommended, to consider the following aspects: </p>
+					{% endif %}
+					{% if ( final_score_ana_new > 75) %}
+						<p>In the area of Analytics and Intelligence, your digital maturity score is showing that you are at a Level 3 – TRANSFORMED stage of digital maturity. Congratulations, that´s great! Nevertheless, in the digitalised world things are changing fast, so enrich your knowledge in the following areas: </p>
+					{% endif %}
+
+			<p>Get the 360° control and insight you need of operational performances across data silos to drive more informed and ultimately better decisions faster. </p>
+
+<p>Get new insights and safeguard your physical assets, operations and site and well as customers, staff or students using them via intelligent video analytics. </p>
+
+<p>Achieve new levels of efficiency and performance, open up new revenue streams, and improve customer experience from your existing Microsoft 365 investment – use intelligent automation to uncovers hidden trends, assist decisions, and predicts outcomes. </p>
+
+<p>Identify and remove risk from your business and avoid the consequences of non-GDPR compliance involving punitive fines and having a disastrous impact on your company’s reputation and business value. </p>
+
+<p>Combine expert IT helpdesk support and service desks capabilities for intelligent monitoring and management of critical IT infrastructure or even processes, flexible support handling, automation exception handling as well as rapid response with high rate of first-time fixes. </p>
+
+<p>Transform your infrastructure and application reporting with timely, drill-down analytical reporting and monitoring. </p>
+					
+				</div>
+				<div class="leftritanalyts">
+					<h3>RECOMMENDED SOLUTIONS & SERVICES</h3>
+					<ul class="anylistul">
+						<li>
+							Simple dashboards to improve your visibility & control : 
+							<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/business-intelligence-dashboards">Intuitive BI Dashboards</a></li>
+                       
+						<li>Powerful business intelligence & intelligent data analytics :
+							<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/business-intelligence-and-data-analytics" target="_blank">Business Intelligence & Data Analytics Solutions</a> | <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/office-365" target="_blank">Microsoft 365 Power Business Intelligence</a></li>
+						<li>Analyse and ensure your data compliancy :
+							<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/it-health-check" target="_blank">IT & Data Compliance Healthcheck</a>  | <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/it-servicedesk-as-a-service" target="_blank">IT Support & Managed Service</a>
+					
+                        </li>
+						<li>Increase business performance, control, and revenue streams :
+							<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/digital-processes-and-workflows" target="_blank">Digital Processes & Workflow Solutions</a> | <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/intelligent-automation" target="_blank">Process Automation</a>
+						</li>
+				<li>Enhance operational efficiency : 
+							<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/outsourcing" target="_blank">Outsourced Services</a>  |
+                    <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/smart-workflow-services" target="_blank">Smart Workflow Services</a>
+						</li>
+                        
+                        <li>Smart surveillance systems :
+							<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/intelligent-video-solutions" target="_blank">Intelligent Video Applications and Use Cases for Your Sector</a>
+                  
+						</li>
+				
+					</ul>
+				</div>
+				<div class="leftritanalyts">
+					<img src="themes/Assessment/images/dx36ologo.jpg" class="leftmgin">
+					<a href="{{base_url}}/#book-appointment" target="_blank" class="button btn btn-large btn-blue btn-rounded newcta margin-30px-bottom js-anchor-link curvebtn">TALK WITH AN EXPERT</a>
+				</div>
+			</div>
+			<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+				<div class="leftritanalyts">
+					<h3>WHAT IS ANALYTICS & INTELLIGENCE?</h3>
+					<p>Utilise the power of data collection by the organisation to improve decision making.
+					</p>
+				</div>
+				<div class="leftritanalyts">
+					<h3>WHY IS IT IMPORTANT?</h3>
+					<p>The true measure of being data-driven is how well you understand insights and take appropriate action when needed. A good technology data-driven strategy for your business is not just about buying the right tools, it's about making sure your systems are accessible whenever and wherever your team needs them to get the job done... and when your customers need you. Real digital maturity is all about being analytical, resilient and intelligent in your business decisions and enablement.
+						<br>
+						Data-driven decision-making leads to greater transparency and accountability whilst enhancing business consistency and continuous improvement.
+					</p>
+				</div>
+				<div class="leftritanalyts">
+					<h3>WHICH CHALLENGES CAN BE SOLVED?</h3>
+					<ul>
+						<li>Business risk reduction</li>
+						<li>Complexity handling</li>
+						<li>Performance & cost control</li>
+
+					</ul>
+				</div>
+
+				<div class="eightanaliyts">
+					<div class="outnumber col-lg-6">
+						<span>7 out of 10</span>
+						<p>employees report that workplace automation boosts their productivity</p>
+						<small>Source: ServiceNow, 2019</small>
+					</div>
+					<div class="outimgrt col-md-6"><img src="themes/Assessment/images/analyout.jpg" alt="Businessperson sitting at a futuristic digital workplace"></div>
+				</div>
+
+{% if final_score_ana_new is not empty %}
+<div class="responsesummary col-lg-12">
+
+
+<h3>RESPONSE SUMMARY</h3>
+
+<span>To review your answers, click on the following link:</span>
+
+<p><a href="{{base_url}}/review/analytics-and-intelligence/{{id_param_ana}}">Analytics &amp; Intelligence results</a></p>
+        
+    </div>
+{% endif %}           
+                
+			</div>
+
+		</div>
+
+	</section>
+	<!-- analystic end -->
+
+	<div id="mobility"></div>
+	<!-- mobility part end -->
+	<section class="wow fadeIn no-padding margin-30px-tb sm-margin-70px-top mobiltydivs" style="visibility: visible; animation-name: fadeIn;">
+		<h2>MOBILITY</h2>
+		<div class="container">
+			<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+				<div class="imgbgs">
+					<img src="themes/Assessment/images/mobilitygraph.jpg">
+					<div class="maingrphresu mobgraphs">
+						<span>OVERALL SCORE</span>
+						{% if final_score_mob_new <= 0 %}
+							<h4>
+								<b>{{final_score_mob_new|number_format(2, '.', '.')}}%</b>
+							</h4>
+							<span>To be Completed</span>
+						</br>
+						<span>
+							<a href="{{base_url}}/mobility/assessment" target="_blank">Click here</a>
+							to complete</span>
+					{% endif %}
+					{% if (final_score_mob_new > 0) and (final_score_mob_new <= 25) %}
+						<h4>
+							<b>{{final_score_mob_new|number_format(2, '.', '.')}}%</b>
+						</h4>
+						<span>Maturity Level 0</span>
+					{% endif %}
+					{% if ( final_score_mob_new > 25)  and (final_score_mob_new <= 50) %}
+						<h4>
+							<b>{{final_score_mob_new|number_format(2, '.', '.')}}%</b>
+						</h4>
+						<span>Maturity Level 1</span>
+					{% endif %}
+					{% if ( final_score_mob_new > 50) and (final_score_mob_new <= 75) %}
+						<h4>
+							<b>{{final_score_mob_new|number_format(2, '.', '.')}}%</b>
+						</h4>
+						<span>Maturity Level 2</span>
+					{% endif %}
+					{% if ( final_score_mob_new > 75) %}
+						<h4>
+							<b>{{final_score_mob_new|number_format(2, '.', '.')}}%</b>
+						</h4>
+						<span>Maturity Level 3</span>
+					{% endif %}
+
+				</div>
+			</div>
+
+			<div class="leftritmobility">
+				<h3>A TAILORED PLAN FOR YOUR BUSINESS</h3>
+				{% if final_score_mob_new <= 0 %}
+					<p>You have not completed the section Mobility. Nevertheless, we would like to give you some food for thoughts and encourage you to complete this section to get a more tailored plan. Please find here some recommendations for this section: </p>
+				{% endif %}
+				{% if (final_score_mob_new > 0) and (final_score_mob_new <= 25) %}
+					<p>In the area of Mobility, your digital maturity score is showing that you are at a Level 0 – EMERGING stage of digital maturity. To not lose track and reduce risks of low maturity, the right time is to start your digital transformation right now by considering the following: </p>
+				{% endif %}
+				{% if ( final_score_mob_new > 25)  and (final_score_mob_new <= 50) %}
+					<p>In the area of Mobility, your digital maturity score is showing that you are at a Level 1 – DIGITALISED stage of digital maturity, which means you started your digital transformation journey already. To continue and accelerate this, we see benefit in starting with the following topics: </p>
+				{% endif %}
+				{% if ( final_score_mob_new > 50) and (final_score_mob_new <= 75) %}
+					<p>In the area of Mobility, your digital maturity score is showing that you are at a Level 2 – INTEGRATED stage of digital maturity, and well under way to reach optimum maturity. Based on your responses in the DX360° Assessment it is recommended, to consider the following aspects: </p>
+				{% endif %}
+				{% if ( final_score_mob_new > 75) %}
+					<p>In the area of Mobility, your digital maturity score is showing that you are at a Level 3 – TRANSFORMED stage of digital maturity. Congratulations, that´s great! Nevertheless, in the digitalised world things are changing fast, so enrich your knowledge in the following areas: </p>
+				{% endif %}
+
+				<p>Cloud computing technology underpins digital transformation, giving businesses like yours the freedom and flexibility to work from any location with flexible cost. </p>
+
+<p>Work is not where you are, but work is what you get done. Organisations are continuously looking for advice and support to navigate the unique set of obstacles presented by enabling a home-based remote workforce. </p>
+
+<p>Ensure your remote workers have secure access to the necessary information, documents and operational workflows i.e. approvals from anywhere without creating “information chaos” and silos.</p>
+
+<p>Create empowered and effective workforces – wherever they are. Embrace managed Microsoft-based digital workspaces and tools to keep individuals, teams and your customers informed, engaged, discussing and collaborating as well as moving projects forward.   </p>
+
+<p>A connected digital office with a holistic approach is necessary to match the needs of modern offices, helping handle its challenges and meet expectations of performance at the highest level. </p>
+			</div>
+			<div class="leftritmobility">
+				<h3>RECOMMENDED SOLUTIONS & SERVICES</h3>
+				<ul class="anylistul">
+					<li>Performance, availability, and flexibility :
+						<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/managed-cloud-hosting">Managed Cloud Hosting</a>
+					</li>
+					<li>Modern intranet & collaboration solution :
+						<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/software/workplace-go-en">Workplace ONE</a>
+					</li>
+					<li>Connected workforce :
+						<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/office-365"> Microsoft Digital Workplaces and Tools</a>
+					</li>
+					<li>Informed decision & efficient workflows :
+						<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/digital-processes-and-workflows">Digital Processes & Workflow Solutions</a> | <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/m-files-intelligent-information-management-solution">Intelligent Information Management (M-Files)</a>&nbsp;|  
+                        <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/intelligent-automation">Process Automation </a>
+					</li>
+					<li>Make your office devices as flexible as your phone : 
+						<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/office-printing/smart-cloud-services">Smart Cloud Services </a>
+					</li>
+					<li>User-friendly & secure :
+						<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/office-printing/cloud-print-infrastructure-services">Intelligent  Cloud Print Infrastructure Services </a>
+					</li>
+
+				</ul>
+			</div>
+			<div class="leftritmobility eightmobility">
+				<img src="themes/Assessment/images/dx36ologo.jpg" class="leftmgin">
+				<a href="{{base_url}}/#book-appointment" target="_blank" class="button btn btn-large btn-blue btn-rounded newcta margin-30px-bottom js-anchor-link curvebtn">Talk with an expert</a>
+			</div>
+		</div>
+		<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+			<div class="leftritmobility">
+				<h3>WHAT IS MOBILITY?</h3>
+				<p>Fluid workstyles allow employees to access data and continue working securely from anywhere at any time.
+				</p>
+			</div>
+			<div class="leftritmobility">
+				<h3>WHY IS IT IMPORTANT?</h3>
+				<p>With an increasingly distributed workforce, remote and hybrid working are here to stay. Businesses must consider how to support mobile working environments for the long-term. This means ensuring agile teams can flexibly scale up on a project-to-project basis and access work apps and data from anywhere.
+				</p>
+			</div>
+			<div class="leftritmobility">
+				<h3>WHICH CHALLENGES CAN BE SOLVED?</h3>
+				<p>Become more agile and streamline with centralised online access points, easily share and access information. Work flexibility with speed and intelligence.</p>
+			</div>
+
+			<div class="eightmobility">
+				<div class="outnumber col-lg-6">
+					<span>80%</span>
+					<p>of enterprises will put a mechanism in place to shift to cloud-centric infrastructure and applications twice as fast as before the pandemic</p>
+					<small>Source: IDC FutureScape: Worldwide IT
+																																																																														                                    Industry 2021 Predictions</small>
+				</div>
+				<div class="outimgrt col-md-6"><img src="themes/Assessment/images/mobilityout.jpg" alt="Businessperson works from their phone while walking outside"></div>
+			</div>
+{% if final_score_mob_new is not empty %}
+<div class="responsesummary col-lg-12">
+
+
+<h3>RESPONSE SUMMARY</h3>
+
+<span>To review your answers, click on the following link:</span>
+
+<p><a href="{{base_url}}/review/mobility/{{id_param_mob}}">Mobility</a></p>
+        
+    </div>
+{% endif %}
+		</div>
+
+	</div>
+
+</section>
+<!-- mobility end -->
+
+
+<div id="productivity"></div>
+<!-- mobility part end -->
+<section class="wow fadeIn no-padding margin-30px-tb sm-margin-70px-top productysdivs" style="visibility: visible; animation-name: fadeIn;">
+	<h2>PRODUCTIVITY & COLLABORATION</h2>
+	<div class="container">
+		<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+			<div class="imgbgs">
+				<img src="themes/Assessment/images/producitygraph.jpg">
+				<div class="maingrphresu prographs">
+					<span>OVERALL SCORE</span>
+					{% if final_score_prod_new <= 0 %}
+						<h4>
+							<b>{{final_score_prod_new|number_format(2, '.', '.')}}%</b>
+						</h4>
+						<span>To be Completed</span>
+					</br>
+					<span>
+						<a href="{{base_url}}/productivity-and-collaboration/assessment" target="_blank">Click here</a>
+						to complete</span>
+				{% endif %}
+				{% if ( final_score_prod_new > 0)  and (final_score_prod_new <= 25) %}
+					<h4>
+						<b>{{final_score_prod_new|number_format(2, '.', '.')}}%</b>
+					</h4>
+					<span>Maturity Level 0</span>
+				{% endif %}
+				{% if ( final_score_prod_new > 25)  and (final_score_prod_new <= 50) %}
+					<h4>
+						<b>{{final_score_prod_new|number_format(2, '.', '.')}}%</b>
+					</h4>
+					<span>Maturity Level 1</span>
+				{% endif %}
+				{% if ( final_score_prod_new > 50) and (final_score_prod_new <= 75) %}
+					<h4>
+						<b>{{final_score_prod_new|number_format(2, '.', '.')}}%</b>
+					</h4>
+					<span>Maturity Level 2</span>
+				{% endif %}
+				{% if ( final_score_prod_new > 75) %}
+					<h4>
+						<b>{{final_score_prod_new|number_format(2, '.', '.')}}%</b>
+					</h4>
+					<span>Maturity Level 3</span>
+				{% endif %}
+
+			</div>
+		</div>
+		<div class="leftritproductys">
+			<h3>A TAILORED PLAN FOR YOUR BUSINESS</h3>
+			{% if final_score_prod_new <= 0 %}
+				<p>You have not completed the section Productivity and Collaboration. Nevertheless, we would like to give you some food for thoughts and encourage you to complete this section to get a more tailored plan. Please find here some recommendations for this section: </p>
+			{% endif %}
+			{% if ( final_score_prod_new > 0)  and (final_score_prod_new <= 25) %}
+				<p>In the area of Productivity and Collaboration, your digital maturity score is showing that you are at a Level 0 – EMERGING stage of digital maturity. To not lose track and reduce risks of low maturity, the right time is to start your digital transformation right now by considering the following: </p>
+			{% endif %}
+			{% if ( final_score_prod_new > 25)  and (final_score_prod_new <= 50) %}
+				<p>In the area of Productivity and Collaboration, your digital maturity score is showing that you are at a Level 1 – DIGITALISED stage of digital maturity, which means you started your digital transformation journey already. To continue and accelerate this, we see benefit in starting with the following topics: </p>
+			{% endif %}
+			{% if ( final_score_prod_new > 50) and (final_score_prod_new <= 75) %}
+				<p>In the area of Productivity and Collaboration, your digital maturity score is showing that you are at a Level 2 – INTEGRATED stage of digital maturity, and well under way to reach optimum maturity. Based on your responses in the DX360° Assessment it is recommended, to consider the following aspects: </p>
+			{% endif %}
+			{% if ( final_score_prod_new > 75) %}
+				<p>In the area of Productivity and Collaboration, your digital maturity score is showing that you are at a Level 3 – TRANSFORMED stage of digital maturity. Congratulations, that´s great! Nevertheless, in the digitalised world things are changing fast, so enrich your knowledge in the following areas: </p>
+			{% endif %}
+
+		<p>As work becomes more digital, we need to rethink our concept of the workplace and collaboration through digital and hybrid workspace and workplaces. Bridge silos and empower individuals, teams and customers to digitally engage and interact with you and your workforce in richer and more diverse ways.  </p>	
+
+<p>Boost your employee productivity by shifting the balance of human work towards more strategic, innovative and customer-focused tasks. Use responsive service desks and helpdesks to handles queries, requests and provide support to people in their daily life, regardless of where they are or when they are in need. </p>	
+
+<p>Unleash the potential of your people by freeing them from manual and repetitive tasks.  Allow them to focus on the tasks that matter.  </p>	
+
+<p>A seamless document management process can support you to monitor, track and manage all documents within an organisation as well as improve the overall user experience. </p>	
+
+<p>In today's information age the need to find the right information at the right time is key. Modern tools let you find files quickly on a single platform. </p>
+		</div>
+		<div class="leftritproductys">
+			<h3>RECOMMENDED SOLUTIONS & SERVICES</h3>
+			<ul class="anylistul">
+				<li>Modern intranet & collaboration solution :
+					<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/software/workplace-go-en">Workplace ONE</a>
+				</li>
+				<li>Future workplace : 
+					<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/office-365">Microsoft Digital Workplaces and Tools</a>
+				</li>
+				<li>Get support anytime for anyone : 
+					<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/outsourcing">Outsourced Services</a>&nbsp;|
+                    <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/outsourcing/customer-services-support">Customer Helpdesks</a>&nbsp;|
+                    <a target="_blank" href="https://www.aire.link/">AIRe Link</a>
+				</li>
+				<li>Increase productivity by process automation : 
+					<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/intelligent-automation">Process Automation</a>&nbsp;|
+		
+					<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/intelligent-invoice-processing">Accounts Payable Platform</a>
+				</li>
+				<li>Keep everyone connected :
+					<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/cloud-based-sms-platform">Cloud-based SMS Platform</a>&nbsp;|
+                    	<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/software/workplace-go-en">Workplace ONE</a>
+				</li>
+				<li>Seamless document workflow : 
+				<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/digital-processes-and-workflows">Digital Processes & Workflow Solutions</a>&nbsp;|&nbsp;<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/m-files-intelligent-information-management-solution">M-Files</a> | <a href="https://www.konicaminolta.co.uk/en-gb/software/document-navigator" target="_blank">Document Navigator</a>&nbsp;|
+					
+					<a href="https://www.konicaminolta.co.uk/en-gb/software/nuance-ecopy-pdf-pro-office" target="_blank">Nuance eCopy PDF Pro Office</a>
+				</li>
+
+			</ul>
+		</div>
+		<div class="leftritproductys eightproductys">
+			<img src="themes/Assessment/images/dx36ologo.jpg" class="leftmgin">
+			<a href="{{base_url}}/#book-appointment" target="_blank" class="button btn btn-large btn-blue btn-rounded newcta margin-30px-bottom js-anchor-link curvebtn">Talk with an expert</a>
+		</div>
+	</div>
+	<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+		<div class="leftritproductys">
+			<h3>WHAT IS PRODUCTIVITY AND COLLABORATION?</h3>
+			<p>Digitalised workflows, cloud and collaboration tools lead to better working relationships from greater efficiency and communications. Output increased from being able to work wherever employees are based in a more fluid and efficient manner.</p>
+		</div>
+		<div class="leftritproductys">
+			<h3>WHY IS IT IMPORTANT?</h3>
+			<p>The way we work has changed dramatically in the past few years. Our environment changes just like our behaviour. With new challenges, we have to think about how we want to collaborate in the future. How do we work across national borders? How do we manage to work together in the future despite pandemics or natural disasters?</p>
+		</div>
+		<div class="leftritproductys">
+			<h3>WHICH CHALLENGES CAN BE SOLVED?</h3>
+			<p>Save time, reduce labour costs, work flexible and increase employee and customer satisfaction.</p>
+		</div>
+
+		<div class="eightproductys">
+			<div class="outnumber col-lg-6">
+				<span>86%</span>
+				<p>of employees say that they usually experience difficulty searching for office files when they need to</p>
+				<small>Source: M-Files, 2019</small>
+			</div>
+			<div class="outimgrt col-md-6"><img src="themes/Assessment/images/producityout.jpg" alt="Collaboration at a business meeting"></div>
+		</div>
+		{% if final_score_prod_new is not empty %}
+<div class="responsesummary col-lg-12">
+
+
+<h3>RESPONSE SUMMARY</h3>
+
+<span>To review your answers, click on the following link:</span>
+
+<p><a href="{{base_url}}/review/productivity-and-collaboration/{{id_param_prod}}">Productivity & Collaboration</a></p>
+        
+    </div>
+{% endif %}
+	</div>
+
+</div></section><!-- mobility end --><div id="security"></div><!-- security part end --><section class="wow fadeIn no-padding margin-30px-tb sm-margin-70px-top securtysdivs" style="visibility: visible; animation-name: fadeIn;">
+<h2>SECURITY & COMPLIANCE</h2>
+<div class="container">
+	<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+
+		<div class="imgbgs">
+			<img src="themes/Assessment/images/secutygraph.jpg">
+			<div class="maingrphresu surtygraphs">
+				<span>OVERALL SCORE</span>
+				{% if final_score_sec_new <= 0 %}
+					<h4>
+						<b>{{final_score_sec_new|number_format(2, '.', '.')}}%</b>
+					</h4>
+					<span>To be Completed</span>
+				</br>
+				<span>
+					<a href="{{base_url}}/security-and-compliance/assessment" target="_blank">Click here</a>
+					to complete</span>
+			{% endif %}
+			{% if ( final_score_sec_new > 0)  and (final_score_sec_new <= 25) %}
+				<h4>
+					<b>{{final_score_sec_new|number_format(2, '.', '.')}}%</b>
+				</h4>
+				<span>Maturity Level 0</span>
+			{% endif %}
+			{% if ( final_score_sec_new > 25)  and (final_score_sec_new <= 50) %}
+				<h4>
+					<b>{{final_score_sec_new|number_format(2, '.', '.')}}%</b>
+				</h4>
+				<span>Maturity Level 1</span>
+			{% endif %}
+			{% if ( final_score_sec_new > 50) and (final_score_sec_new <= 75) %}
+				<h4>
+					<b>{{final_score_sec_new|number_format(2, '.', '.')}}%</b>
+				</h4>
+				<span>Maturity Level 2</span>
+			{% endif %}
+			{% if ( final_score_sec_new > 75) %}
+				<h4>
+					<b>{{final_score_sec_new|number_format(2, '.', '.')}}%</b>
+				</h4>
+				<span>Maturity Level 3</span>
+			{% endif %}
+
+		</div>
+	</div>
+
+	<div class="leftritsecurtysdivs">
+		<h3>A TAILORED PLAN FOR YOUR BUSINESS</h3>
+		{% if final_score_sec_new <= 0 %}
+			<p>You have not completed the section Security and Compliance. Nevertheless, we would like to give you some food for thoughts and encourage you to complete this section to get a more tailored plan. Please find here some recommendations for this section: </p>
+		{% endif %}
+		{% if ( final_score_sec_new > 0)  and (final_score_sec_new <= 25) %}
+			<p>In the area of Security and Compliance, your digital maturity score is showing that you are at a Level 0 – EMERGING stage of digital maturity. To not lose track and reduce risks of low maturity, the right time is to start your digital transformation right now by considering the following: </p>
+		{% endif %}
+		{% if ( final_score_sec_new > 25)  and (final_score_sec_new <= 50) %}
+			<p>In the area of Security and Compliance, your digital maturity score is showing that you are at a Level 1 – DIGITALISED stage of digital maturity, which means you started your digital transformation journey already. To continue and accelerate this, we see benefit in starting with the following topics: </p>
+		{% endif %}
+		{% if ( final_score_sec_new > 50) and (final_score_sec_new <= 75) %}
+			<p>In the area of Security and Compliance, your digital maturity score is showing that you are at a Level 2 – INTEGRATED stage of digital maturity, and well under way to reach optimum maturity. Based on your responses in the DX360° Assessment it is recommended, to consider the following aspects:</p>
+		{% endif %}
+		{% if ( final_score_sec_new > 75) %}
+			<p>In the area of Security and Compliance, your digital maturity score is showing that you are at a Level 3 – TRANSFORMED stage of digital maturity. Congratulations, that´s great! Nevertheless, in the digitalised world things are changing fast, so enrich your knowledge in the following areas: </p>
+		{% endif %}
+
+		<p>A resilient IT infrastructure management using experienced experts, ensures high-performance IT, and reduces the risk of downtimes while giving you and your customers peace of mind. Identify and actively manage IT weaknesses and risks to your business before it is too late. </p>
+
+<p>Ransomware attacks and other security breaches need to be treated like other disasters – you need a recovery and incident response plan in place. </p>
+
+<p>Deploying a secure print solution lets you manage one of the weakest links in information security – paper-based communications, enabling you to monitor your employees' print behavior and assign user access rights. </p>
+
+<p>Not only during Covid-19, but also before and after, intelligent visual recognition and surveillance cameras contribute to security in private and professional environment and improve life in society.</p>
+
+<p>While IT environments gets more complex every day, professional security services reduce your risk of penetration from external forces as well as leaks and threats from malware.</p>
+
+<p>Manage key processes and any governed documents. i.e. approvals, contracts through compliant and digital governed workflows and repositories.  </p>
+	</div>
+	<div class="leftritsecurtysdivs">
+		<h3>RECOMMENDED SOLUTIONS & SERVICES</h3>
+		<ul class="anylistul">
+	
+			<li>Increase resilience :
+				<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/it-health-check">IT & Data Compliance Healthcheck</a>
+					</li>
+			<li>Managed IT services 24/7/365 : 
+				<a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/managed-it-support-services">360° IT Support & Managed Service</a>
+			</li>
+			<li>Physical protection & monitoring :
+                <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/intelligent-video-solutions">Intelligent Video Applications and Use Cases for Your Sector</a>
+
+				</li>
+            <li>Secure your business data :
+                <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/it-security">IT Security Services</a>&nbsp;|
+         <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/information-security-consulting">Information Security Consultation</a>
+				</li>
+		 <li>High performance : 
+                <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/it-servicedesk-as-a-service">IT Service Desk</a>
+        
+				</li>
+             <li>End-point security :
+                <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/infrastructure-management-services">Remote Monitoring & Management</a>&nbsp;| 
+          <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/solutions/office-printing/secure-printing">Print Security</a>&nbsp;|
+                    <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/software/dispatcher-paragon">Paragon</a>&nbsp;|
+                    <a target="_blank" href="https://www.konicaminolta.co.uk/en-gb/services/bizhub-secure">bizhub Secure</a>
+            </li>
+		</ul>
+	</div>
+	<div class="leftritsecurtysdivs eightsecurtysdivs">
+		<img src="themes/Assessment/images/dx36ologo.jpg" class="leftmgin">
+		<a href="{{base_url}}/#book-appointment" target="_blank" class="button btn btn-large btn-blue btn-rounded newcta margin-30px-bottom js-anchor-link curvebtn">Talk with an expert</a>
+	</div>
+</div>
+<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+	<div class="leftritsecurtysdivs">
+		<h3>WHAT IS SECURITY & COMPLIANCE?</h3>
+		<p>Business operations always remain compliant and active, and important company data is vulnerable to external threats.</p>
+	</div>
+	<div class="leftritsecurtysdivs">
+		<h3>WHY IS IT IMPORTANT?</h3>
+		<p>Your cybersecurity posture has never been more important.  While business demands have driven IT leaders to focus on collaboration and digital transformation, it's important to remember that none of those innovations matter if you can't keep your business information secure.
+																																							                    When it comes to information security, organisations require knowledge, skills, tools, and experience across multiple platforms and disciplines to stay safe.
+		</p>
+	</div>
+	<div class="leftritsecurtysdivs">
+		<h3>WHICH CHALLENGES CAN BE SOLVED?</h3>
+		<p>Security breaches, business continuity, disaster recovery, data loss, downtime minimisation.</p>
+	</div>
+
+	<div class="eightsecurtysdivs">
+		<div class="outnumber col-lg-6">
+			<span>2020</span>
+			<p>saw a steep increase in ransomware and data theft attempts trying to exploit insecure home office work processes</p>
+			<small>Source: Barracuda, Threat Spotlight:
+																																																				                                    Coronavirus-Related Phishing, 2020</small>
+		</div>
+		<div class="outimgrt col-md-6"><img src="themes/Assessment/images/securityout.jpg" alt="Digitally secured laptop"></div>
+	</div>
+{% if final_score_sec_new is not empty %}
+<div class="responsesummary col-lg-12">
+
+
+<h3>RESPONSE SUMMARY</h3>
+
+<span>To review your answers, click on the following link:</span>
+
+<p><a href="{{base_url}}/review/security-and-compliance/{{id_param_sec}}">Security & Compliance</a></p>
+        
+    </div>
+	{% endif %}
+</div></div></section><!-- security end --><div id="flexibility"></div><!-- flexibtys part end --><section class="wow fadeIn no-padding margin-30px-tb sm-margin-70px-top flexibtysdivs" style="visibility: visible; animation-name: fadeIn;"><h2>FLEXIBILITY, EFFICIENCY & SUSTAINABILITY</h2><div class="container">
+<div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+	<div class="imgbgs">
+		<img src="themes/Assessment/images/flexbitygraph.jpg">
+		<div class="maingrphresu flextygraphs">
+			<span>OVERALL SCORE</span>
+			{% if final_score_flex_new <= 0 %}
+				<h4>
+					<b>{{final_score_flex_new|number_format(2, '.', '.')}}%</b>
+				</h4>
+				<span>To be Completed</span>
+			</br>
+			<span>
+				<a href="{{base_url}}/flexibility-efficiency-and-sustainability/flexibility-assessment" target="_blank">Click here</a>
+				to complete</span>
+		{% endif %}
+		{% if ( final_score_flex_new > 0)  and (final_score_flex_new <= 25) %}
+			<h4>
+				<b>{{final_score_flex_new|number_format(2, '.', '.')}}%</b>
+			</h4>
+			<span>Maturity Level 0</span>
+		{% endif %}
+		{% if ( final_score_flex_new > 25)  and (final_score_flex_new <= 50) %}
+			<h4>
+				<b>{{final_score_flex_new|number_format(2, '.', '.')}}%</b>
+			</h4>
+			<span>Maturity Level 1</span>
+		{% endif %}
+		{% if ( final_score_flex_new > 50) and (final_score_flex_new <= 75) %}
+			<h4>
+				<b>{{final_score_flex_new|number_format(2, '.', '.')}}%</b>
+			</h4>
+			<span>Maturity Level 2</span>
+		{% endif %}
+		{% if ( final_score_flex_new > 75) %}
+			<h4>
+				<b>{{final_score_flex_new|number_format(2, '.', '.')}}%</b>
+			</h4>
+			<span>Maturity Level 3</span>
+		{% endif %}
+
+	</div>
+</div>
+<div class="leftritflexibtys">
+	<h3>A TAILORED PLAN FOR YOUR BUSINESS</h3>
+	{% if final_score_flex_new <= 0 %}
+		<p>You have not completed the section Flexibility, Efficiency and Sustainability. Nevertheless, we would like to give you some food for thoughts and encourage you to complete this section to get a more tailored plan. Please find here some recommendations for this section: </p>
+	{% endif %}
+	{% if ( final_score_flex_new > 0)  and (final_score_flex_new <= 25) %}
+		<p>In the area of Flexibility, Efficiency and Sustainability, your digital maturity score is showing that you are at a Level 0 – EMERGING stage of digital maturity. To not lose track and reduce risks of low maturity, the right time is to start your digital transformation right now by considering the following: </p>
+	{% endif %}
+	{% if ( final_score_flex_new > 25)  and (final_score_flex_new <= 50) %}
+		<p>In the area of Flexibility, Efficiency and Sustainability, your digital maturity score is showing that you are at a Level 1 – DIGITALISED stage of digital maturity, which means you started your digital transformation journey already. To continue and accelerate this, we see benefit in starting with the following topics: </p>
+	{% endif %}
+	{% if ( final_score_flex_new > 50) and (final_score_flex_new <= 75) %}
+		<p>In the area of Flexibility, Efficiency and Sustainability, your digital maturity score is showing that you are at a Level 2 – INTEGRATED stage of digital maturity, and well under way to reach optimum maturity. Based on your responses in the DX360° Assessment it is recommended, to consider the following aspects: </p>
+	{% endif %}
+	{% if ( final_score_flex_new > 75) %}
+		<p>In the area of Flexibility, Efficiency and Sustainability, your digital maturity score is showing that you are at a Level 3 – TRANSFORMED stage of digital maturity. Congratulations, that´s great! Nevertheless, in the digitalised world things are changing fast, so enrich your knowledge in the following areas: </p>
+	{% endif %}
+
+<p>Use a more flexible and resilient IT platform to run your business on and that scales and flexes with your demands, peaks, and troughs. Migrate to the cloud and get your key software applications and IT infrastructure delivered and managed as a service.  </p>
+
+<p>Easily extend & flex your back-office operations as well as deliver new customer experiences and services levels through skills, tasks and outcomes all delivered as a service Pay-As-You-Go. </p>
+
+<p>Implement the very latest remote support innovations, enabling immediate expert assistance to your customers and field support teams wherever they are. </p>
+
+<p>Introduce more flexible customer and internal digital experiences (i.e. Self-service portals, meeting bookings, chat functionality, surveys, etc.). </p>
+
+<p>Automate repetitive tasks and processes to across your departments and operations to drive new efficiencies and virtually unlimited capacity and scalability  </p>
+ 
+<p>Add automated and personalised text messaging alongside existing communications to instantly provide real-time alerts, updates and key messages when they need it.  </p>
+
+<p>Use intelligent analytics to identify the true scale and nature of your most inefficient paper-based processes. Receive an expert summary and recommendations highlighting quick wins and longer-term digital transformation opportunities to remove inefficiencies and manual processes.  </p>
+
+<p>For paper-based processes that remain – integrate these processes seamlessly alongside digital processes, add automation, personalisation even augmented reality to provide richer experiences whilst completely removing the administrative burden of managing print.  </p>
+	<!-- <ul>
+	
+													    <li> Text 1</li>
+													    <li> Text 2</li>
+													    <li> Text 3</li>
+													  </ul> -->
+
+</div>
+<div class="leftritflexibtys">
+	<h3>RECOMMENDED SOLUTIONS & SERVICES</h3>
+	<ul class="anylistul">
+		<li>Software requirements & IT that flexes & scales with your business :
+			<a href="https://www.konicaminolta.co.uk/en-gb/it-services" target="_blank">Software as a Service</a>  |
+            <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/managed-cloud-hosting" target="_blank">Managed Cloud Hosting</a>  |
+            <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/managed-it-support-services" target="_blank">IT Support & Managed Service</a>
+		</li>
+		<li>New customer or operational efficiencies and remote efficiencies :
+			<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/outsourcing" target="_blank">Outsourced Services</a> | <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/digital-processes-and-workflows" target="_blank">Digital Processes & Workflow Solutions</a>
+		</li>
+		<li>Remote assistance & support :
+<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/outsourcing/customer-services-support" target="_blank">Customer Helpdesks</a>&nbsp;|
+            <a href="https://www.aire.link/" target="_blank">AIRe Link</a>
+		</li>
+		<li>Keep everyone connected :
+			<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/cloud-based-sms-platform" target="_blank">Cloud-based SMS platform</a> |
+			<a href="https://www.konicaminolta.co.uk/en-gb/software/workplace-go-en" target="_blank">Workplace ONE</a>
+		
+		</li>
+		<li>Target waste and inefficiency :
+            <a href="https://www.konicaminolta.co.uk/en-gb/software/dispatcher-paragon" target="_blank">Dispatcher Phoenix</a> |
+             <a href="https://www.konicaminoltasa.com/en-za/software/user-cost-management/papercut" target="_blank">PaperCut</a> |
+             <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/smart-workflow-services" target="_blank">Smart Workflow Services</a> | <a href=" https://www.konicaminolta.co.uk/en-gb/software/everyone-print" target="_blank">EveryonePrint</a> | <a href=" https://www.konicaminolta.co.uk/en-gb/services/cloud-print" target="_blank">Cloud Printing</a>
+        </li>
+		<li>Digital workspaces, digital information and document management :
+			<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/rethink-document-management" target="_blank">Document & Information Management Solutions</a> | <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/m-files-intelligent-information-management-solution" target="_blank"> M-Files</a> |
+            <a href="https://www.konicaminolta.co.uk/en-gb/software/dispatcher-phoenix" target="_blank"> Dispatcher Phoenix</a> |
+            <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/digital-mailroom" target="_blank">Digital Mailroom</a> |
+            <a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/office-365" target="_blank">Microsoft 365</a>
+		</li>
+<li>Intelligent task and process automation :
+			<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/intelligent-automation" target="_blank"> Process Automation</a> |
+			<a href="https://www.konicaminolta.co.uk/en-gb/solutions/it-services/intelligent-invoice-processing" target="_blank">P2P & Accounts Payable Automation</a>
+		
+		</li>
+        <li>Add digital content to print through augmented reality, and enhance sustainability :
+			<a href="https://www.genarate.com/" target="_blank">genARate</a> 
+		
+		
+		</li>
+	</ul>
+</div>
+<div class="leftritflexibtys eightflexibtys">
+	<img src="themes/Assessment/images/dx36ologo.jpg" class="leftmgin">
+	<a href="{{base_url}}/#book-appointment" target="_blank" class="button btn btn-large btn-blue btn-rounded newcta margin-30px-bottom js-anchor-link curvebtn">Talk with an expert</a>
+</div></div><div class="col-12 col-md-6 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+<div class="leftritflexibtys">
+	<h3>WHAT IS FLEXIBILITY, EFFICENCY AND SUSTAINABILITY?</h3>
+	<p>Operations scale to suit different requirements, meet changing demands with agility and purpose, Leaner work processes improve profitability and eliminate the need for capital expenditures and increased efficiency by reducing an organisation's physical footprint and wastage.</p>
+</div>
+<div class="leftritflexibtys">
+	<h3>WHY IS IT IMPORTANT?</h3>
+	<p>Increasing customer demands, rapid changes of market conditions and cost as well as resource reduction requests, drive all of us to find new ways to scale operations to different needs more than ever before.</p>
+</div>
+<div class="leftritflexibtys">
+	<h3>WHICH CHALLENGES CAN BE SOLVED?</h3>
+	<p>Optimisation of performance, save time and cost, reduce carbon footprint, guarantee a seamless customer experience.</p>
+</div>
+
+<div class="eightflexibtys">
+	<div class="outnumber col-lg-6">
+		<span>TOP</span>
+		<p>challenge for SMBs to accelerate digital transformation is lack of internal digital skills and resources</p>
+		<small>Source: IDC/Cisco, Small Business
+																																							                                    Digitalization and COVID-19 Survey, 2020</small>
+	</div>
+	<div class="outimgrt col-md-6"><img src="themes/Assessment/images/flexityout.jpg" alt="Accessing paperless documents on a tablet"></div>
+</div>
+{% if final_score_flex_new is not empty %}
+<div class="responsesummary col-lg-12">
+
+
+<h3>RESPONSE SUMMARY</h3>
+
+<span>To review your answers, click on the following link:</span>
+
+<p><a href="{{base_url}}/review/flexibility-efficiency-and-sustainability/{{id_param_flex}}">Flexibility, Efficiency & Sustainability</a></p>
+        
+    </div>
+	{% endif %}
+</div></div></section>
+
+
+
+		<!-- 4stage part start -->
+		<section class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+
+			<div class="container-fuild">
+				<div class="imsectionbefo col-lg-7">
+
+
+					<div class="stagelistArrow">
+
+						<div class="stageArrow1 Cmarrow1">
+
+							<div class="stageArrowtop">
+								<div class="stagestagetextarrow1">
+									<div class="stageinnerarrow">
+										We support our
+																																																																																																																																		customers to be free
+																																																																																																																																		from paper documents
+									</div>
+
+									<ul>
+
+										<li>Digital workflow
+																																																																																																																																															                solutions</li>
+										<li>Business process
+																																																																																																																																															                automation</li>
+										<li>Managed IT
+																																																																																																																																															                infrastructure</li>
+									</ul>
+
+									<div class="stagecolArrow">
+										<h4>Connect
+											<span>IT</span>
+										</h4>
+										<div class="stageimgarrow">
+											<img src="themes/Assessment/images/icon1.png">
+										</div>
+									</div>
+
+								</div>
+								<div class="stagearrowbtn">
+
+									<a href="#" class="btnArrows">Maturity Level 0</a>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="stageArrow1 Cmarrow2">
+
+							<div class="stageArrowtop">
+								<div class="stagetextarrow1">
+									<div class="stageinnerarrow colormopnk">
+										We support our
+																																																																																																																																		            customers to become
+																																																																																																																																		            location independent
+
+									</div>
+
+									<ul>
+
+										<li>Cloud / mobile
+																																																																																																																																															                IT solutions</li>
+										<li>Collaboration
+																																																																																																																																															                solution</li>
+										<li>IT Security</li>
+									</ul>
+
+									<div class="stagecolArrow">
+										<h4>Connect
+											<span>Work</span>
+										</h4>
+										<div class="stageimgarrow">
+											<img src="themes/Assessment/images/lap.png">
+										</div>
+									</div>
+								</div>
+
+								<div class="stagearrowbtn">
+
+									<a href="#" class="btnArrows">Maturity Level 1</a>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="stageArrow1 Cmarrow3">
+							<div class="stageArrowtop">
+								<div class="stagetextarrow1">
+
+									<div class="stageinnerarrow colorflevoil">
+										We are implementing fact-based, creative decision-making environments
+									</div>
+
+									<ul>
+
+										<li>Acquire, analyse
+																																																																																																																																															                and utilise data</li>
+										<li>Decision making
+																																																																																																																																															                support</li>
+										<li>Creating new
+																																																																																																																																															                monitising schemes</li>
+									</ul>
+
+									<div class="stagecolArrow">
+										<h4>Connect
+											<span>People</span>
+										</h4>
+										<div class="stageimgarrow"><img src="themes/Assessment/images/icon3.png">
+										</div>
+									</div>
+
+								</div>
+								<div class="stagearrowbtn">
+
+									<a href="#" class="btnArrows">Maturity Level 2</a>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="stageArrow1 Cmarrow4">
+
+							<div class="stageArrowtop">
+								<div class="stagetextarrow1 mleftminus">
+									<div class="txts">Intelligent
+																																																																																																																																		Connected
+																																																																																																																																		Workplace</div>
+
+								</div>
+
+
+								<div class="stagearrowbtn">
+
+									<a href="#" class="btnArrows">Maturity Level 3</a>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stagelistArrow2">
+						<ul>
+
+							<li>
+								<div class="mrs">Emerging</div>
+							</li>
+							<li>
+								<div class="mrs">Digitalised</div>
+							</li>
+							<li>
+								<div class="mrs">Integrated</div>
+							</li>
+							<li>
+								<div class="mrs">Transformed</div>
+							</li>
+						</ul>
+					</div>
+
+					<h1 class="stagesecurtyiarw"><img src="themes/Assessment/images/exportstages.jpg">
+						Security</h1>
+					<p class="notifiystages">The 4 Stages</p>
+					<small class="btntitles">Inset: The Konica Minolta Digital Maturity Model</small>
+
+				</div>
+				
+			</div>
+		</section>
+		<!-- 4stage part end -->
+
+
+<!---Thank you section start here-----><section class="wow fadeIn margin-30px-tb sm-margin-70px-top tnksyou" style="visibility: visible; animation-name: fadeIn;"><div class="container-fuild"><div class="col-12 col-md-12 sm-margin-five-bottom last-paragraph-no-margin wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+
+<h3>THANK YOU FOR COMPLETING THE KONICA MINOLTA DX360° ASSESSMENT.</h3>
+<p>FOR MORE INFORMATION, PLEASE BOOK YOUR FREE 20-MINUTE DX CONSULTANCY. WE WOULD BE GLAD TO BE YOUR PARTNER IN YOUR DIGITAL TRANSFORMATION JOURNEY.</p></div></div></section><!---Thank you section end here-----><!--- footer start here ----><footer class="footer-standard-dark bg-dark-footer" id="footer"><div class="footer-widget-area padding-20px-tb sm-padding-30px-tb padding-30px-btm"><div class="container">
+<div class="row">
+	<div
+		class="col-lg-6 col-md-6 widget sm-text-center">
+
+		<!-- start social media -->
+		<div class="social-icon-style-8 d-inline-block vertical-align-middle">
+			<ul class="small-icon no-margin-bottom">
+				<li>
+					<a class="facebook text-white-2" href="https://www.facebook.com/" target="_blank"><img src="{{base_url}}/themes/Assessment/images/fb-rethink.svg" alt="Facebook logo"></a>
+				</li>
+				<li>
+					<a class="linkedin text-white-2" href="https://linkedin.com/" target="_blank"><img src="{{base_url}}/themes/Assessment/images/linkedin-rethink.svg" alt="Linkedin logo"></a>
+				</li>
+				<li>
+					<a class="twitter text-white-2" href="https://twitter.com/" target="_blank"><img src="{{base_url}}/themes/Assessment/images/twitter-rethink.svg" alt="Twitter logo"></a>
+				</li>
+				<li>
+					<a class="youtube text-white-2" href="https://youtube.com/" target="_blank"><img src="{{base_url}}/themes/Assessment/images/youtube-rethink.svg" alt="Youtube logo"></a>
+				</li>
+			</ul>
+		</div>
+		<!-- end social media -->
+	</div>
+
+	<!-- start text image -->
+	<div class="col-lg-6 col-md-6 widget md-padding-15px-left text-md-right text-center padding-5px-top">
+		<img src="{{base_url}}/themes/Assessment/images/gsti_text.svg" alt="">
+	</div>
+	<!-- end text image -->
+</div></div></div><div class="border-top border-color-medium-dark-gray margin-60px-lr padding-16px-top"><div class="bg-dark-footer padding-20px-bottom text-center sm-padding-30px-tb">
+<div class="container padding-0">
+	<div
+		class="row">
+		<!-- start copyright -->
+		<div class="col-md-6 text-md-left text-small text-center text-medium-gray">
+			<a href="https://www.konicaminolta.co.uk/en-gb/terms-of-use" target="_blank" class="text-extra-light-gray footer-links">Term of Use</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="https://dx360.konicaminolta.co.uk/sites/default/files/DX360Assessment-PrivacyPolicy-Website-v1-0.pdf" target="_blank" class="text-extra-light-gray footer-links">Privacy Policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="https://dx360.konicaminolta.co.uk/sitemap" class="text-extra-light-gray footer-links">Sitemap</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="https://www.konicaminolta.co.uk/en-gb/imprint" target="_blank" class="text-extra-light-gray footer-links">Imprint</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="javascript:void(0);" class="text-extra-light-gray footer-links cookies">Cookie Settings</a>
+		</div>
+		<div class="col-md-6 text-md-right text-small text-center text-extra-light-gray sm-padding-30px-top">
+			© 2021 Konica Minolta Business Solutions (UK) Limited.
+		</div>
+		<!-- end copyright -->
+	</div>
+</div></div></div></footer><!---  footer end here --><!-- flexibtys end --></div>
+<script id="usercentrics-cmp" src="https://app.usercentrics.eu/browser-ui/latest/loader.js" data-settings-id="TYs1T85gv" async></script>
+<script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/modernizr.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/bootstrap.bundle.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.easing.1.3.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/skrollr.min.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/smooth-scroll.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.appear.js"></script><!-- menu navigation --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/bootsnav.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.nav.js"></script><!-- animation --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/wow.min.js"></script><!-- page scroll --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/page-scroll.js"></script><!-- swiper carousel --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/swiper.min.js"></script><!-- counter --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.count-to.js"></script><!-- parallax --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.stellar.js"></script><!-- magnific popup --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.magnific-popup.min.js"></script><!-- portfolio with shorting tab --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/isotope.pkgd.min.js"></script><!-- themes/Assessment/images loaded --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/imagesloaded.pkgd.min.js"></script><!-- pull menu --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/classie.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/hamburger-menu.js"></script><!-- counter  --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/counter.js"></script><!-- fit video  --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.fitvids.js"></script><!-- skill bars  --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/skill.bars.jquery.js"></script><!-- justified gallery  --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/justified-gallery.min.js"></script><!--pie chart--><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/jquery.easypiechart.min.js"></script><!-- retina --><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/retina.min.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/main.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/canvasjsnew.js"></script><script type="text/javascript" src="{{base_url}}/themes/Assessment/js/classy/canvasjs.min.js"></script><script>$(".hasmenu").click(function () {
+$(".hasmenu").removeClass("active")
+$(this).addClass("active");
+
+
+//          $(".submenus").slideUp()
+$(this).find(".Sidemenus").show();
+});
+$(".opneside").click(function () {
+$(".sidendat,.serchover").addClass("active");
+
+});
+$(".btnclose").click(function () {
+$(".sidendat,.serchover").removeClass("active");
+
+});</script>

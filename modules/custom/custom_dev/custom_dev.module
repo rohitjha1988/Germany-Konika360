@@ -1,0 +1,62 @@
+<?php
+use Drupal\user\UserInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\Core\Url;
+use Drupal\webform\Entity\Webform;
+use Drupal\webform\Entity\WebformSubmission;
+use Drupal\user\Entity\User;
+use Drupal\webform\WebformSubmissionForm;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+
+use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Database\Database;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+function custom_dev_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+	if($form['progress']['#current_page'] == "fifth"){
+			//print($form['progress']['#current_page']);die;
+			foreach (array_keys($form['actions']) as $action) {
+			if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+			    $form['actions'][$action]['#submit'][] = 'custom_assessment_form_submit';
+		    }
+		}
+	}
+		
+}
+
+
+function custom_assessmentss_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+	
+	print('helo');die;
+
+$a = $form_state->getValue('from_0_to_100_do_you_have_a_seamless_work_experience_where_you_c'); 
+$b = $form_state->getValue('what_percentage_of_your_workforce_when_working_remotely_have_acc'); 
+$c = $form_state->getValue('when_your_workforce_is_working_remotely_is_their_it_still_manage'); 
+$d = $form_state->getValue('how_do_you_manage_document_work_and_other_manual_work_in_your_da'); 
+$e = $form_state->getValue('to_what_extend_supports_your_servicedesk_your_customer_s_needs_'); 
+
+$session = \Drupal::request()->getSession();
+$session->set('a', $a);
+$session->set('b', $b);
+$session->set('c', $c);
+$session->set('d', $d);
+$session->set('e', $e);
+
+
+$test_a = $session->get($a);
+$test_b = $session->get($b);
+$test_c = $session->get($c);
+$test_d = $session->get($d);
+$test_e = $session->get($e);
+
+$response = new TrustedRedirectResponse('http://google.co.in');
+$form_state->setResponse($response);
+
+
+}
